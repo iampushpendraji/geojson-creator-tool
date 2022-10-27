@@ -1,0 +1,82 @@
+.data-table {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  background-color: aliceblue;
+  border-left: 1px solid gray;
+  transition: transform 0.5s;
+}
+
+/* .data-table {
+  scrollbar-color: red yellow;
+} */
+/* red is for the thumb and yellow is for the track */
+
+::-webkit-scrollbar{
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track{
+  background-color: #EFF8FF;
+}
+
+::-webkit-scrollbar-thumb{
+  background: #10CAF0;
+  border-radius: 10px;
+}
+
+.data-table-hide {
+  transform: translateX(100%);
+}
+
+.data-table-show {
+  transform: translateX(0%);
+}
+
+.download-div {
+  position: sticky;
+  top: 0;
+}
+
+.table-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.toggler-btn {
+  position: absolute;
+  top: 50%;
+  left: -25px;
+}
+
+.table-div {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #10CAF0 #EFF8FF;
+}
+
+.show-reverse-arrow {
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
+@media only screen and (max-width: 992px) {
+  .data-table {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .data-table {
+    width: 30%;
+  }
+}

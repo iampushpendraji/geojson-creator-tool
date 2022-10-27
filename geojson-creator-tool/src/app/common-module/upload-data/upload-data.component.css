@@ -1,0 +1,13 @@
+input {
+    width: 100%;
+}
+
+.upload-header{
+    position: relative;
+}
+
+.upload-header mat-icon {
+    position: absolute;
+    right: 0;
+    top: 3px;
+}

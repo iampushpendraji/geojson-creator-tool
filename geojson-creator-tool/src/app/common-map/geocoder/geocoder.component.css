@@ -1,0 +1,74 @@
+#search-input::placeholder {
+  font-size: 15px;
+}
+
+#lngLatForm > input::placeholder {
+  font-size: 15px;
+}
+
+#lngLatForm > input {
+  height: 10px;
+  font-size: 15px;
+  padding: 12px 15px;
+}
+
+#lngLatForm > input:focus {
+  outline: none;
+}
+
+button {
+  font-size: 15px;
+}
+
+.close-btn {
+  background: transparent;
+  border: 0.1px solid rebeccapurple;
+}
+
+.close-btn:hover {
+  background: transparent;
+  border: 0.1px solid red;
+  color: red;
+}
+
+#geocoder {
+  position: absolute;
+  z-index: 2;
+  left: 5px;
+  top: 5px;
+}
+
+#search-input {
+  height: 10px;
+  font-size: 15px;
+  padding: 15px;
+}
+
+#search-input:focus {
+  outline: none;
+}
+
+.search-icon {
+  height: 30px;
+  background-color: #ffffff;
+  border: 1px solid black;
+}
+
+.search-list-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reverse-geocode-data{
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+.reverse-geocode-data div span:nth-child(1){
+  font-weight: bolder;
+}
+
+/* .reverse-geocode-data div span:nth-child(2){
+  color: blue;
+} */
