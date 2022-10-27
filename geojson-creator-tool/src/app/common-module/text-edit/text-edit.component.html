@@ -1,0 +1,40 @@
+<div>
+    <label for="textname">Name</label>
+    : <input type="text" name="" id="textname" [(ngModel)]="textName">
+</div>
+
+<div>
+    <label for="color">Color</label>
+    : <input id="color" [(colorPicker)]="textColor" [style.background]="textColor" />
+</div>
+
+<div>
+    <label for="height">Height</label>
+    : <input type="text" name="" id="height" [(ngModel)]="textHeight">
+</div>
+
+<div>
+    <label for="width">Width</label>
+    : <input type="text" name="" id="width" [(ngModel)]="textWidth">
+</div>
+
+<div>
+    <label for="textFontSize">Size</label>
+    : <input type="text" name="" id="textFontSize" [(ngModel)]="textFontSize">
+</div>
+
+<div>
+    <label for="lat">Lat</label>
+    : <input type="text" name="" id="lat" [(ngModel)]="textLat">
+</div>
+
+<div>
+    <label for="lng">Lng</label>
+    : <input type="text" name="" id="lng" [(ngModel)]="textLng">
+</div>
+
+<div class="mt-3 text-center">
+    <button class="btn btn-sm btn-secondary" (click)="closeBtn()">Close</button>
+    <button class="btn btn-sm btn-success ms-1" (click)="submitBtn()">Submit</button>
+    <button class="btn btn-sm btn-danger ms-1" (click)="deleteText()">Delete</button>
+</div>

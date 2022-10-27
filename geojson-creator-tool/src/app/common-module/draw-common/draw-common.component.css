@@ -1,0 +1,23 @@
+.draw-tool {
+  cursor: pointer;
+}
+
+.active-tool {
+  background: cyan;
+}
+
+.draw-main {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  text-align: center;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+.toggle-div::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: blue; /*replace with your color*/
+}
+
+.toggle-div::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: skyblue;  /*replace with your color*/
+}

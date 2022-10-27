@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Custom Css */
+.p-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.snackbar-err {
+    background-color: red;
+    color: #fff;
+}
+
+.snackbar-success {
+    background-color: rgb(19, 166, 66);
+    color: #fff;
+}
+
+.snackbar-success .mat-simple-snackbar-action {
+    color: #fff;
+}
+
+.snackbar-err .mat-simple-snackbar-action {
+    color: #fff;
+}

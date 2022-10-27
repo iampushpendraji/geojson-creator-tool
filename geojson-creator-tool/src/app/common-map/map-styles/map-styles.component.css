@@ -1,0 +1,9 @@
+#map-style{
+    position: absolute;
+    bottom: 0;
+}
+
+.active-map-style{
+    background-color: darkred;
+    color: white;
+}

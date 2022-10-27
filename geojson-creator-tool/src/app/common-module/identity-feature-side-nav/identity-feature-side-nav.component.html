@@ -1,0 +1,160 @@
+<div class="identity-feature" [ngClass]="showIdentityFeature ? 'identity-feature-show' : 'identity-feature-hide'">
+    <header class="p-flex shadow">
+        <span>Identity Feature</span>
+        <mat-icon class="cancle-icon" (click)="closeIdentity()">cancel</mat-icon>
+    </header>
+    <main>
+        <div *ngIf="geo_json_main">
+            <div class="mt-2">
+                <!-- For Marker -->
+                <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'marker'">
+                    <div>
+                        <img height="35px" width="35px" class="ms-2 fs-1" role="button"
+                            [src]="'../../../assets/marker-icons/all_maki_icons/svgs/'+ markerName + '.svg'" alt=""
+                            (click)="showMarkerList()" />
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-2">
+                        <label for="marker-height">Height</label>
+                        : <input id="marker-height" type="number" [(ngModel)]="markerHeight" />
+                    </div>
+
+                    <div class="d-flex justify-content-center my-2">
+                        <label for="marker-width">Width</label>
+                        : <input id="marker-width" type="number" [(ngModel)]="markerWidth" />
+                    </div>
+
+                    <!-- <div>
+                    <label for="fill-opacity">Fill Opacity</label>
+                    <input id="fill-opacity" [(ngModel)]="fillOpacity" />
+                </div> -->
+                </div>
+
+                <!-- For Polygon -->
+                <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Polygon'">
+                    <div class="d-flex justify-content-center mb-2">
+                        <label for="fill-color">Background Color</label>
+                        : <input id="fill-color" [(colorPicker)]="fillColor" [style.background]="fillColor" />
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-2">
+                        <label for="fill-outline-color">Border Color</label>
+                        : <input id="fill-outline-color" [(colorPicker)]="fillBorderColor"
+                            [style.background]="fillBorderColor" />
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-2">
+                        <label for="fill-opacity">Border Width</label>
+                        : <input id="fill-opacity" type="number" [(ngModel)]="fillBorderWidth" />
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-2">
+                        <label for="fill-opacity">Fill Opacity</label>
+                        : <input id="fill-opacity" type="number" [(ngModel)]="fillOpacity" />
+                    </div>
+                </div>
+
+                <!-- For LineString -->
+                <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'LineString'">
+                    <div class="d-flex justify-content-center mb-2">
+                        <label for="fill-outline-color">Line Color</label>
+                        : <input id="fill-outline-color" [(colorPicker)]="lineColor" [style.background]="lineColor" />
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-2">
+                        <label for="fill-opacity">Line Width</label>
+                        <input id="fill-opacity" type="number" [(ngModel)]="lineWidth" />
+                    </div>
+                </div>
+
+                <!-- For Point -->
+                <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Point'">
+                    <div class="d-flex justify-content-center mb-2">
+                        <label for="fill-outline-color">Circle Color</label>
+                        : <input id="fill-outline-color" [(colorPicker)]="circleColor"
+                            [style.background]="circleColor" />
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-2">
+                        <label for="fill-opacity">Circle Radius</label>
+                        : <input id="fill-opacity" type="number" [(ngModel)]="circleRadius" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="row mt-3 text-center">
+            <div class="col border border-dark">
+                Name
+            </div>
+            <div class="col border border-dark">
+                Value
+            </div>
+        </div> -->
+        <form (ngSubmit)="submitData()" [formGroup]="featureForm" class="mt-2">
+            <!-- <table class="w-100 table table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th>-</th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="identityFormData">
+                    <tr *ngFor="let data_of_identity of identityFormData.controls index as i">
+                        <div class="d-flex" [formGroupName]="i">
+                            <td><input class="w-100" formControlName="name" type="text" /></td>
+                            <td><input class="w-100" formControlName="value" type="text" /></td>
+                            <button class="btn btn-sm bg-danger" (click)="removeAttribute(i)">-</button>
+                        </div>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <button class="btn btn-sm d-flex btn-primary" (click)="addNewAttribute()">
+                                <span>+</span>
+                                <span class="ms-1">Add Attribute</span>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table> -->
+            <div formArrayName="identityFormData" *ngFor="let data_of_identity of identityFormData.controls index as i">
+                <div [formGroupName]="i" class="text-center">
+                    <div *ngIf="i !== 0">
+                        <input type="text" formControlName="name" [readonly]="i == 0">
+                        <input type="text" formControlName="value" [readonly]="i == 0">
+                        <button type="button" [disabled]="i == 0" class="btn btn-sm btn-danger"
+                            (click)="removeAttribute(i)">-</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-flex mb-3">
+                <button type="button" class="btn btn-sm d-flex btn-primary mt-2 mb-2" (click)="addNewAttribute()">
+                    <span>+</span>
+                    <span class="ms-1">Add Attribute</span>
+                </button>
+                <button type="submit" class="btn btn-sm btn-success ms-2">Submit</button>
+                <button type="button" class="d-flex align-items-center btn btn-sm btn-danger ms-2"
+                    (click)="deleteFeature()">
+                    <span class="p-0 m-0 d-flex align-items-center">
+                        <mat-icon>delete_forever</mat-icon>
+                        <span>Delete</span>
+                    </span>
+                </button>
+            </div>
+        </form>
+
+        <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'marker'" class="alert alert-danger" style="line-height: 15px;">
+            * Click on marker icon in identity feature to change it
+        </div>
+
+    </main>
+</div>
