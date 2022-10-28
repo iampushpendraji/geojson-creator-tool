@@ -18,6 +18,7 @@ import { DownloadDataService } from 'src/app/services/download-data.service';
 })
 export class DrawCommonComponent implements OnInit, AfterViewInit {
   // isMarker: boolean = true;
+  editModeGeoJsonCheck: number = 0;
   canDeleteGeom: boolean = false;
   drawText: boolean;
   drawCustomMarker: boolean;
@@ -166,6 +167,11 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       this.setGeoJsonMain();
       // this.map.getSource('YourMapSource').setData(this.geo_json_main);
       this.styleService.setDataOnMap(this.map, this.geo_json_main);
+    }
+    if (type == 'update') {
+      if(this.layerEditMode) {
+        this.editModeGeoJsonCheck ++;
+      }
     }
     this.sendDrawSourceData();
     if (this.drawContinuously || this.canDeleteGeom) {
@@ -408,7 +414,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       }
     }
     else {
-      this.snackbarService.openSnackbar('Please turn of edit layer to create new geometry', 'snackbar-err');
+      this.snackbarService.openSnackbar('Please turn of edit layer to use this feature', 'snackbar-err');
     }
   }
 
@@ -437,10 +443,16 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       this.activeTool = 'simple-select';
       this.geo_json_main = this.setGeoJsonForStopEditMode();
       // this.map.getSource('YourMapSource').setData(this.geo_json_main);
-      this.styleService.setDataOnMap(this.map, this.geo_json_main, false);
+      if(this.editModeGeoJsonCheck > 0) {
+        this.styleService.setDataOnMap(this.map, this.geo_json_main, false);
+      }
+      else{
+        this.styleService.setDataOnMap(this.map, this.geo_json_main, false, false);
+      }
       this.dataShareService.sendSourceData(this.geo_json_main);
       this.draw.deleteAll();
       this.stopDraw();
+      this.editModeGeoJsonCheck = 0;
     }
   }
 
