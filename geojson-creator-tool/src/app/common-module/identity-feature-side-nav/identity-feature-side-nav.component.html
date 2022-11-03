@@ -1,5 +1,5 @@
 <div class="identity-feature" [ngClass]="showIdentityFeature ? 'identity-feature-show' : 'identity-feature-hide'">
-    <header class="p-flex shadow">
+    <header class="p-flex">
         <span>Identity Feature</span>
         <mat-icon class="cancle-icon" (click)="closeIdentity()">cancel</mat-icon>
     </header>
@@ -67,7 +67,7 @@
     
                         <div class="d-flex justify-content-center mb-2">
                             <label for="fill-opacity">Line Width</label>
-                            <input id="fill-opacity" type="number" [(ngModel)]="lineWidth" />
+                            : <input id="fill-opacity" type="number" [(ngModel)]="lineWidth" />
                         </div>
                     </div>
     
@@ -137,7 +137,7 @@
             </table>
            
             <!-- Table for point lat lon -->
-            <table class="table w-75" *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Point'">
+            <table class="table w-75" *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Point' || geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'marker'">
                 <tr>
                     <td class="border border-1 border-dark p-2">Latitude</td>
                     <td class="border border-1 border-dark p-2">{{geo_json_main.features[this.CurrentFeatureindex].geometry.coordinates[0]}}</td>

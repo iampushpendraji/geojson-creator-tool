@@ -22,7 +22,7 @@ export class DownloadDataService {
     }
   }
 
-  downloadObjectAsKml(exportObj:any, exportName) {
+  downloadObjectAsKml(exportObj: any, exportName) {
     const kml = tokml(exportObj);
     const kmlNameDescription = tokml(exportObj, {
       name: exportName,
@@ -52,6 +52,15 @@ export class DownloadDataService {
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
+  }
+
+  changeTypeMarkerToPoint(tempData: any) {
+    tempData.features.forEach((element, index) => {
+      if (element.geometry.type == 'marker') {
+        tempData.features[index].geometry.type = 'Point';
+      }
+    });
+    return tempData;
   }
 
 }

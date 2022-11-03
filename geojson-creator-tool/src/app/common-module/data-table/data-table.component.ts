@@ -54,7 +54,8 @@ export class DataTableComponent implements OnInit {
   downloadData() {
     if (this.dataSource) {
       if (this.dataSource.features.length > 0) {
-        this.downloadDataService.downloadData(this.downloadType, { ...this.dataSource });
+        let newDataSource = this.downloadDataService.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...this.dataSource })));
+        this.downloadDataService.downloadData(this.downloadType, { ...newDataSource });
       }
       else {
         this.snackbarService.openSnackbar('Please draw atleast one geometry', 'snackbar-err');

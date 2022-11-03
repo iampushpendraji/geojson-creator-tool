@@ -27,10 +27,10 @@ export class UploadDataComponent implements OnInit {
     const fileReader = new FileReader();
     fileReader.readAsText(this.uploadedFile, "UTF-8");
     fileReader.onload = () => {
-      this.uploadedJsonObj = (JSON.parse(fileReader.result.toString()));
+      this.uploadedJsonObj = this.setGeoJsonForOurTool(JSON.parse(fileReader.result.toString()));
       this.dataShareService.sendSourceData(this.uploadedJsonObj);
       this.styleService.setDataOnMap(this.map, this.uploadedJsonObj
-        );
+      );
       this.snackbarService.openSnackbar('File uploaded successfully', 'snackbar-success');
       this.dialogRef.close();
     }
@@ -38,6 +38,25 @@ export class UploadDataComponent implements OnInit {
       console.log(error);
       this.snackbarService.openSnackbar('Failed in uploading your flile please try again', 'snackbar-err');
     }
+  }
+
+  setGeoJsonForOurTool(geo_json_main: any) {
+    if (geo_json_main.features.length > 0) {
+      geo_json_main.features.forEach((element: any, index: any) => {
+        if (element.geometry.type == 'Point') {
+          if (element.styledetails.styledata.markername !== undefined) {
+            geo_json_main.features[index].geometry.type = "marker";
+          }
+          else if (element.styledetails.styledata.textname !== undefined) {
+            geo_json_main.features[index].geometry.type = "marker";
+          }
+          else {
+            geo_json_main.features[index].geometry.type = "Point";
+          }
+        }
+      });
+    }
+    return geo_json_main;
   }
 
   closeDialog() {

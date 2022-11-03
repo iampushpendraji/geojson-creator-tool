@@ -169,8 +169,8 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       this.styleService.setDataOnMap(this.map, this.geo_json_main);
     }
     if (type == 'update') {
-      if(this.layerEditMode) {
-        this.editModeGeoJsonCheck ++;
+      if (this.layerEditMode) {
+        this.editModeGeoJsonCheck++;
       }
     }
     this.sendDrawSourceData();
@@ -299,7 +299,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   }
 
   afterDrawCreated() {
-    if(this.layerEditMode) {
+    if (this.layerEditMode) {
       this.activeTool = 'edit-mode';
     }
     else {
@@ -440,7 +440,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       }
       this.draw.changeMode('simple_select');
       // this.isMarker = false;
-      let tempGeoJSON = this.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...this.geo_json_main })));
+      let tempGeoJSON = this.downloadDataService.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...this.geo_json_main })));
       this.styleService.deleteAllMarkers();
       this.draw.add(tempGeoJSON);
       this.map.getSource('YourMapSource').setData({
@@ -451,10 +451,10 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       this.activeTool = 'simple-select';
       this.geo_json_main = this.setGeoJsonForStopEditMode();
       // this.map.getSource('YourMapSource').setData(this.geo_json_main);
-      if(this.editModeGeoJsonCheck > 0) {
+      if (this.editModeGeoJsonCheck > 0) {
         this.styleService.setDataOnMap(this.map, this.geo_json_main, false);
       }
-      else{
+      else {
         this.styleService.setDataOnMap(this.map, this.geo_json_main, false, false);
       }
       this.dataShareService.sendSourceData(this.geo_json_main);
@@ -546,7 +546,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
 
   addLabelHandler(event: any) {
     if (event.checked == true) {
-      let tempGeoJSON1 = this.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...this.geo_json_main })));
+      let tempGeoJSON1 = this.downloadDataService.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...this.geo_json_main })));
       let tempGeoJSON = this.changeTypePolygonToPoint(JSON.parse(JSON.stringify({ ...tempGeoJSON1 })));
       this.mapService.addLabelFn(tempGeoJSON);
       console.log(this.geo_json_main)
@@ -602,6 +602,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   downloadDataFinal(dataSource: any, downloadType: string) {
     if (dataSource) {
       if (dataSource.features.length > 0) {
+        dataSource = this.downloadDataService.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...dataSource })));
         this.downloadDataService.downloadData(downloadType, { ...dataSource });
       }
       else {
