@@ -55,6 +55,7 @@ export class GeocoderComponent implements OnInit {
     this.geocodeData = undefined;
     this.reverseGeocodeData = undefined;
     this.showSearchDiv = false;
+    this.marker.remove();
   }
 
   showDataInMap(data: any) {

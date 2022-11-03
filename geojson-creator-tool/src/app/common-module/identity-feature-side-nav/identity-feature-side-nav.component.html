@@ -4,85 +4,150 @@
         <mat-icon class="cancle-icon" (click)="closeIdentity()">cancel</mat-icon>
     </header>
     <main>
-        <div *ngIf="geo_json_main">
-            <div class="mt-2">
-                <!-- For Marker -->
-                <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'marker'">
-                    <div>
-                        <img height="35px" width="35px" class="ms-2 fs-1" role="button"
-                            [src]="'../../../assets/marker-icons/all_maki_icons/svgs/'+ markerName + '.svg'" alt=""
-                            (click)="showMarkerList()" />
-                    </div>
-
-                    <div class="d-flex justify-content-center mt-2">
-                        <label for="marker-height">Height</label>
-                        : <input id="marker-height" type="number" [(ngModel)]="markerHeight" />
-                    </div>
-
-                    <div class="d-flex justify-content-center my-2">
-                        <label for="marker-width">Width</label>
-                        : <input id="marker-width" type="number" [(ngModel)]="markerWidth" />
-                    </div>
-
-                    <!-- <div>
-                    <label for="fill-opacity">Fill Opacity</label>
-                    <input id="fill-opacity" [(ngModel)]="fillOpacity" />
-                </div> -->
-                </div>
-
-                <!-- For Polygon -->
-                <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Polygon'">
-                    <div class="d-flex justify-content-center mb-2">
-                        <label for="fill-color">Background Color</label>
-                        : <input id="fill-color" [(colorPicker)]="fillColor" [style.background]="fillColor" />
-                    </div>
-
-                    <div class="d-flex justify-content-center mb-2">
-                        <label for="fill-outline-color">Border Color</label>
-                        : <input id="fill-outline-color" [(colorPicker)]="fillBorderColor"
-                            [style.background]="fillBorderColor" />
-                    </div>
-
-                    <div class="d-flex justify-content-center mb-2">
-                        <label for="fill-opacity">Border Width</label>
-                        : <input id="fill-opacity" type="number" [(ngModel)]="fillBorderWidth" />
-                    </div>
-
-                    <div class="d-flex justify-content-center mb-2">
+        <div class="p-flex my-2 toggle-div">
+            <mat-slide-toggle class="d-block" (change)="getShowMeasurementStatus($event)">Show Measurement</mat-slide-toggle>
+        </div>
+        <div *ngIf="!showMeasurement">
+            <div *ngIf="geo_json_main">
+                <div class="mt-2">
+                    <!-- For Marker -->
+                    <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'marker'">
+                        <div>
+                            <img height="35px" width="35px" class="ms-2 fs-1" role="button"
+                                [src]="'../../../assets/marker-icons/all_maki_icons/svgs/'+ markerName + '.svg'" alt=""
+                                (click)="showMarkerList()" />
+                        </div>
+    
+                        <div class="d-flex justify-content-center mt-2">
+                            <label for="marker-height">Height</label>
+                            : <input id="marker-height" type="number" [(ngModel)]="markerHeight" />
+                        </div>
+    
+                        <div class="d-flex justify-content-center my-2">
+                            <label for="marker-width">Width</label>
+                            : <input id="marker-width" type="number" [(ngModel)]="markerWidth" />
+                        </div>
+    
+                        <!-- <div>
                         <label for="fill-opacity">Fill Opacity</label>
-                        : <input id="fill-opacity" type="number" [(ngModel)]="fillOpacity" />
+                        <input id="fill-opacity" [(ngModel)]="fillOpacity" />
+                    </div> -->
                     </div>
-                </div>
-
-                <!-- For LineString -->
-                <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'LineString'">
-                    <div class="d-flex justify-content-center mb-2">
-                        <label for="fill-outline-color">Line Color</label>
-                        : <input id="fill-outline-color" [(colorPicker)]="lineColor" [style.background]="lineColor" />
+    
+                    <!-- For Polygon -->
+                    <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Polygon'">
+                        <div class="d-flex justify-content-center mb-2">
+                            <label for="fill-color">Background Color</label>
+                            : <input id="fill-color" [(colorPicker)]="fillColor" [style.background]="fillColor" />
+                        </div>
+    
+                        <div class="d-flex justify-content-center mb-2">
+                            <label for="fill-outline-color">Border Color</label>
+                            : <input id="fill-outline-color" [(colorPicker)]="fillBorderColor"
+                                [style.background]="fillBorderColor" />
+                        </div>
+    
+                        <div class="d-flex justify-content-center mb-2">
+                            <label for="fill-opacity">Border Width</label>
+                            : <input id="fill-opacity" type="number" [(ngModel)]="fillBorderWidth" />
+                        </div>
+    
+                        <div class="d-flex justify-content-center mb-2">
+                            <label for="fill-opacity">Fill Opacity</label>
+                            : <input id="fill-opacity" type="number" [(ngModel)]="fillOpacity" />
+                        </div>
                     </div>
-
-                    <div class="d-flex justify-content-center mb-2">
-                        <label for="fill-opacity">Line Width</label>
-                        <input id="fill-opacity" type="number" [(ngModel)]="lineWidth" />
+    
+                    <!-- For LineString -->
+                    <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'LineString'">
+                        <div class="d-flex justify-content-center mb-2">
+                            <label for="fill-outline-color">Line Color</label>
+                            : <input id="fill-outline-color" [(colorPicker)]="lineColor" [style.background]="lineColor" />
+                        </div>
+    
+                        <div class="d-flex justify-content-center mb-2">
+                            <label for="fill-opacity">Line Width</label>
+                            <input id="fill-opacity" type="number" [(ngModel)]="lineWidth" />
+                        </div>
                     </div>
-                </div>
-
-                <!-- For Point -->
-                <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Point'">
-                    <div class="d-flex justify-content-center mb-2">
-                        <label for="fill-outline-color">Circle Color</label>
-                        : <input id="fill-outline-color" [(colorPicker)]="circleColor"
-                            [style.background]="circleColor" />
-                    </div>
-
-                    <div class="d-flex justify-content-center mb-2">
-                        <label for="fill-opacity">Circle Radius</label>
-                        : <input id="fill-opacity" type="number" [(ngModel)]="circleRadius" />
+    
+                    <!-- For Point -->
+                    <div *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Point'">
+                        <div class="d-flex justify-content-center mb-2">
+                            <label for="fill-outline-color">Circle Color</label>
+                            : <input id="fill-outline-color" [(colorPicker)]="circleColor"
+                                [style.background]="circleColor" />
+                        </div>
+    
+                        <div class="d-flex justify-content-center mb-2">
+                            <label for="fill-opacity">Circle Radius</label>
+                            : <input id="fill-opacity" type="number" [(ngModel)]="circleRadius" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div *ngIf="showMeasurement" class="p-flex">
+            <!-- Table for polygon measurement -->
+            <table class="table w-75" *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Polygon'">
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Sq. Meters</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{polygonMeasurement}}</td>
+                </tr>
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Sq. Kilometers</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{polygonMeasurement / 1000000}}</td>
+                </tr>
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Sq. Feet</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{polygonMeasurement * 10.76}}</td>
+                </tr>
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Acres</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{polygonMeasurement * 0.0002471054}}</td>
+                </tr>
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Sq. Miles</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{polygonMeasurement * 0.00000039}}</td>
+                </tr>
+            </table>
 
+            <!-- Table for polyline measurement -->
+            <table class="table w-75" *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'LineString'">
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Meters</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{lineMeasurement * 1000}}</td>
+                </tr>
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Kilometers</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{lineMeasurement}}</td>
+                </tr>
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Feet</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{lineMeasurement * 3280.84}}</td>
+                </tr>
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Yards</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{lineMeasurement * 1093.61}}</td>
+                </tr>
+                <tr>
+                    <td scope="col" class="border border-1 border-dark p-2">Miles</td>
+                    <td scope="col" class="border border-1 border-dark p-2">{{lineMeasurement * 0.621371}}</td>
+                </tr>
+            </table>
+           
+            <!-- Table for point lat lon -->
+            <table class="table w-75" *ngIf="geo_json_main?.features[this.CurrentFeatureindex]?.geometry?.type == 'Point'">
+                <tr>
+                    <td class="border border-1 border-dark p-2">Latitude</td>
+                    <td class="border border-1 border-dark p-2">{{geo_json_main.features[this.CurrentFeatureindex].geometry.coordinates[0]}}</td>
+                </tr>
+                <tr>
+                    <td class="border border-1 border-dark p-2">Longitude</td>
+                    <td class="border border-1 border-dark p-2">{{geo_json_main.features[this.CurrentFeatureindex].geometry.coordinates[1]}}</td>
+                </tr>
+            </table>
+        </div>
 
         <!-- <div class="row mt-3 text-center">
             <div class="col border border-dark">

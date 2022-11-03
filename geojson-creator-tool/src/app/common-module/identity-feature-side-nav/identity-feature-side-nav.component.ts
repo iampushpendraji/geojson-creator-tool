@@ -14,12 +14,16 @@ import { IconListDialogComponent } from '../icon-list-dialog/icon-list-dialog.co
   styleUrls: ['./identity-feature-side-nav.component.css'],
 })
 export class IdentityFeatureSideNavComponent implements OnInit {
+  showMeasurement: boolean;
   featureFormData: any;
   featureForm: FormGroup;
   showIdentityFeature: boolean;
   geo_json_main: any;
   CurrentFeatureindex: any;
   @Input() map: any;
+
+  polygonMeasurement: number | undefined;
+  lineMeasurement: number | undefined;
 
   markerWidth
   markerHeight
@@ -75,10 +79,12 @@ export class IdentityFeatureSideNavComponent implements OnInit {
       this.fillBorderColor = this.geo_json_main.features[this.CurrentFeatureindex].styledetails.styledata.fillbordercolor;
       this.fillBorderWidth = this.geo_json_main.features[this.CurrentFeatureindex].styledetails.styledata.fillborderwidth;
       this.fillOpacity = this.geo_json_main.features[this.CurrentFeatureindex].styledetails.styledata.fillopacity;
+      this.polygonMeasurement = this.geo_json_main.features[this.CurrentFeatureindex].measurement.squaremeters;
     }
     if (this.geo_json_main.features[this.CurrentFeatureindex].geometry.type == 'LineString') {
       this.lineColor = this.geo_json_main.features[this.CurrentFeatureindex].styledetails.styledata.linecolor;
       this.lineWidth = this.geo_json_main.features[this.CurrentFeatureindex].styledetails.styledata.linewidth;
+      this.lineMeasurement = this.geo_json_main.features[this.CurrentFeatureindex].measurement.kilometers;
     }
     if (this.geo_json_main.features[this.CurrentFeatureindex].geometry.type == 'Point') {
       this.circleColor = this.geo_json_main.features[this.CurrentFeatureindex].styledetails.styledata.circlecolor;
@@ -175,7 +181,7 @@ export class IdentityFeatureSideNavComponent implements OnInit {
   }
 
   submitData() {
-    if(this.featureForm.status == 'VALID') {
+    if (this.featureForm.status == 'VALID') {
       this.setDataIn_geo_json_main(
         this.featureForm.get('identityFormData').value
       );
@@ -250,6 +256,10 @@ export class IdentityFeatureSideNavComponent implements OnInit {
         this.markerName = result;
       }
     });
+  }
+
+  getShowMeasurementStatus(event: any) {
+    this.showMeasurement = event.checked;
   }
 
   showIdentity(data: any) {

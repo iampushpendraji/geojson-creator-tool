@@ -33,7 +33,7 @@ export class StyleServiceService {
       this.geo_json_main = data;
     });
   }
-fillBorderWidthArray = [];
+  fillBorderWidthArray = [];
   setColorArrayData(map: any) {
     this.fillColorArray = [];
     // this.outLineColorArray = [];
@@ -225,7 +225,7 @@ fillBorderWidthArray = [];
   }
 
   setDataOnMap(map: any, geo_json_main: any, canDeleteMarkers = true, canSetDataState = true) {
-    if(canSetDataState) {
+    if (canSetDataState) {
       this.setDataSourceFn(JSON.parse(JSON.stringify({ ...geo_json_main })));
     }
     if (canDeleteMarkers) {
@@ -311,7 +311,7 @@ fillBorderWidthArray = [];
           .addTo(this.map);
       }
       else if (marker.styledetails.styledata.textname) {
-        let canDragtextField = true;
+        let canDragtextField: boolean | void = true;
         const el = document.createElement('div');
         const width = marker.styledetails.styledata.width;
         const height = marker.styledetails.styledata.height;
@@ -347,37 +347,45 @@ fillBorderWidthArray = [];
         })
 
         el.addEventListener('contextmenu', () => {
-          const dialogRef = this.matDialog.open(TextEditComponent, {
-            data: { textField: marker, geo_json_main: this.geo_json_main, map: this.map },
-            disableClose: true
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            let resultGeoJSON = { ...this.geo_json_main };
-            if (result) {
-              let index = resultGeoJSON.features.findIndex(m => result.id == m.id);
-              resultGeoJSON.features[index].geometry.coordinates = [result.textLng, result.textLat];
-              resultGeoJSON.features[index].styledetails.styledata.color = result.textColor;
-              resultGeoJSON.features[index].styledetails.styledata.height = result.textHeight;
-              resultGeoJSON.features[index].styledetails.styledata.width = result.textWidth;
-              resultGeoJSON.features[index].styledetails.styledata.textname = result.textName;
-              resultGeoJSON.features[index].styledetails.styledata.textfontsize = result.textFontSize;
-            }
-            canDragtextField = false;
-            this.setDataOnMap(this.map, resultGeoJSON);
-            this.dataShareService.sendSourceData(resultGeoJSON);
-          });
-          // this.sendIdentityFeatureStatus(marker);
-          // this.sendIdentityFeatureStatus(marker);
+          canDragtextField = this.openTextFieldPopUp(marker, canDragtextField);
         });
 
         el.addEventListener('click', () => {
-          if(this.canDeleteMarker){
+          if (this.canDeleteMarker) {
             this.deleteFeature(marker);
+          }
+          else {
+            canDragtextField = this.openTextFieldPopUp(marker, canDragtextField);
           }
         })
 
       }
     }
+  }
+
+  openTextFieldPopUp(marker: any, canDragtextField: boolean | void) {
+    const dialogRef = this.matDialog.open(TextEditComponent, {
+      data: { textField: marker, geo_json_main: this.geo_json_main, map: this.map },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      let resultGeoJSON = { ...this.geo_json_main };
+      if (result) {
+        let index = resultGeoJSON.features.findIndex(m => result.id == m.id);
+        resultGeoJSON.features[index].geometry.coordinates = [result.textLng, result.textLat];
+        resultGeoJSON.features[index].styledetails.styledata.color = result.textColor;
+        resultGeoJSON.features[index].styledetails.styledata.height = result.textHeight;
+        resultGeoJSON.features[index].styledetails.styledata.width = result.textWidth;
+        resultGeoJSON.features[index].styledetails.styledata.textname = result.textName;
+        resultGeoJSON.features[index].styledetails.styledata.textfontsize = result.textFontSize;
+      }
+      canDragtextField = false;
+      this.setDataOnMap(this.map, resultGeoJSON);
+      this.dataShareService.sendSourceData(resultGeoJSON);
+      return canDragtextField;
+    });
+    // this.sendIdentityFeatureStatus(marker);
+    // this.sendIdentityFeatureStatus(marker);
   }
 
   setTextFieldData(data: any) {
@@ -450,16 +458,16 @@ fillBorderWidthArray = [];
     }
     let tempData = JSON.parse(JSON.stringify({ ...data }));
     this.dataState.push(tempData);
-    this.currentStateIndex ++;
+    this.currentStateIndex++;
     this.isUndoChecked = false;
   }
 
   handleUndo() {
     if (this.dataState.length > 0) {
-      this.currentStateIndex --;
+      this.currentStateIndex--;
       if (this.currentStateIndex <= 0) {
         this.snackBarService.openSnackbar(`You can't undo from this state'`, 'snackbar-err');
-        this.currentStateIndex ++;
+        this.currentStateIndex++;
       }
       else {
         let tempDataState = this.dataState[this.currentStateIndex - 1];
@@ -476,10 +484,10 @@ fillBorderWidthArray = [];
 
   handleRedo() {
     if (this.dataState.length > 0) {
-      this.currentStateIndex ++;
+      this.currentStateIndex++;
       if (this.currentStateIndex > this.dataState.length) {
         this.snackBarService.openSnackbar(`You can't redo from this state`, 'snackbar-err');
-        this.currentStateIndex --;
+        this.currentStateIndex--;
       }
       else {
         let tempDataState = this.dataState[this.currentStateIndex - 1];

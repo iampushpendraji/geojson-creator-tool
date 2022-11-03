@@ -231,10 +231,14 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
 
 
     if (data.geometry.type == 'Polygon') {
+      const area = turf.area(data);
       featureStyleData.styledetails = {
         id: data.id,
         styledata: polygonObj
       }
+      featureStyleData.measurement = {
+        squaremeters: Math.round(area * 100) / 100
+      };
     }
 
     if (data.geometry.type == 'Point') {
@@ -262,10 +266,14 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
     }
 
     if (data.geometry.type == 'LineString') {
+      const distance = turf.length(this.draw.getAll());
       featureStyleData.styledetails = {
         id: data.id,
         styledata: lineObj
       }
+      featureStyleData.measurement = {
+        kilometers: distance
+      };
     }
 
     return featureStyleData;
