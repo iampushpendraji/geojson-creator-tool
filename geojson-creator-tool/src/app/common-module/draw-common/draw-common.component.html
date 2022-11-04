@@ -3,13 +3,27 @@
         class="border p-2 draw-tool" (click)="startDraw('freehand')">
         <img src="../../../assets/freehand-polygon.png" height="20px" alt="">
     </span>
+    <span matTooltip="Draw polygon" [ngClass]="activeTool == 'polygon' ? 'active-tool' : ''"
+        class="border p-2 draw-tool" (click)="startDraw('polygon')">
+        <img src="../../../assets/polygon.png" height="20px" alt="">
+    </span>
+    <span matTooltip="Draw rectangle" [ngClass]="activeTool == 'square' ? 'active-tool' : ''"
+        class="border p-2 draw-tool" (click)="startDraw('square')">
+        <img src="../../../assets/square.png" height="20px" alt="">
+    </span>
+    <span matTooltip="Draw rectangle" [ngClass]="activeTool == 'circle' ? 'active-tool' : ''"
+        class="border p-2 draw-tool d-flex align-items-center justify-content-center" (click)="startDraw('circle')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          </svg>
+    </span>
     <span matTooltip="Draw line string" [ngClass]="activeTool == 'line' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('line')">
         <img src="../../../assets/draw-line.png" height="20px" alt="">
     </span>
-    <span matTooltip="Draw polygon" [ngClass]="activeTool == 'polygon' ? 'active-tool' : ''"
-        class="border p-2 draw-tool" (click)="startDraw('polygon')">
-        <img src="../../../assets/polygon.png" height="20px" alt="">
+    <span matTooltip="Draw line freehandly" [ngClass]="activeTool == 'freehand-line' ? 'active-tool' : ''"
+        class="border p-2 draw-tool" (click)="startDraw('freehand-line')">
+        <img src="../../../assets/pencil-line.png" height="20px" alt="">
     </span>
     <!-- <span [ngClass]="activeTool == 'marker' ? 'active-tool' : ''" class="border p-2 draw-tool"
         (click)="startDraw('marker')">
@@ -22,14 +36,6 @@
     <span matTooltip="Draw points" [ngClass]="activeTool == 'points' ? 'active-tool' : ''" class="border p-2 draw-tool d-flex align-items-center justify-content-center"
         (click)="startDraw('points')">
         <img src="../../../assets/points.png" height="20px" alt="">
-    </span>
-    <span matTooltip="Draw rectangle" [ngClass]="activeTool == 'square' ? 'active-tool' : ''"
-        class="border p-2 draw-tool" (click)="startDraw('square')">
-        <img src="../../../assets/square.png" height="20px" alt="">
-    </span>
-    <span matTooltip="Draw line freehandly" [ngClass]="activeTool == 'freehand-line' ? 'active-tool' : ''"
-        class="border p-2 draw-tool" (click)="startDraw('freehand-line')">
-        <img src="../../../assets/pencil-line.png" height="20px" alt="">
     </span>
     <span matTooltip="Enter text on Map" [ngClass]="activeTool == 'add-text' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('add-text')">

@@ -18,6 +18,7 @@ import { DownloadDataService } from 'src/app/services/download-data.service';
 })
 export class DrawCommonComponent implements OnInit, AfterViewInit {
   // isMarker: boolean = true;
+  circlePolygonFeature: any;
   editModeGeoJsonCheck: number = 0;
   canDeleteGeom: boolean = false;
   drawText: boolean;
@@ -57,6 +58,9 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
     this.dataShareService.getSourceData.subscribe((data) => {
       this.geo_json_main = data;
     });
+    this.mapService.getCircleFeature.subscribe((data) => {
+      this.circlePolygonFeature = data;
+    })
 
     this.map.on('click', (e: any) => {
       if (this.canDrawMarker) {
@@ -190,7 +194,15 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
 
   setGeoJsonMain() {
     let drawData = this.draw.getAll();
-    let featureData = drawData.features[0];
+    let featureData;
+    if (this.activeDrawMode == 'draw_radius') {
+      featureData = this.circlePolygonFeature;
+      featureData.id = this.draw.getAll().features[0].id;
+      this.circlePolygonFeature = undefined;
+    }
+    else {
+      featureData = drawData.features[0];
+    }
     if (featureData) {
       featureData.properties['featureid'] = drawData.features[0].id;
       featureData = this.setStyleDetails(featureData);
@@ -348,6 +360,11 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
           this.activeDrawMode = 'draw_polygon';
           this.draw.changeMode(this.activeDrawMode);
           this.mousePopUpMessage = 'Use mouse left click to start draw polygon';
+          break;
+        case 'circle':
+          this.activeDrawMode = 'draw_radius';
+          this.draw.changeMode(this.activeDrawMode);
+          this.mousePopUpMessage = 'Use mouse left one time for start and same for stop';
           break;
         case 'line':
           this.activeDrawMode = 'draw_line_string';
