@@ -1,11 +1,11 @@
 <div class="identity-feature" [ngClass]="showIdentityFeature ? 'identity-feature-show' : 'identity-feature-hide'">
-    <header class="p-flex">
+    <header class="p-flex shadow-sm">
         <span>Identity Feature</span>
         <mat-icon class="cancle-icon" (click)="closeIdentity()">cancel</mat-icon>
     </header>
     <main>
         <div class="p-flex my-2 toggle-div">
-            <mat-slide-toggle class="d-block" (change)="getShowMeasurementStatus($event)">Show Measurement</mat-slide-toggle>
+            <span class="me-2">Style</span><mat-slide-toggle class="d-block" (change)="getShowMeasurementStatus($event)"></mat-slide-toggle><span class="ms-2">Info</span>
         </div>
         <div *ngIf="!showMeasurement">
             <div *ngIf="geo_json_main">

@@ -3,7 +3,7 @@
   z-index: 3;
   right: 0;
   top: 0;
-  width: 30%;
+  /* width: 30%; */
   height: 100%;
   background-color: aliceblue;
   border-left: 1px solid gray;
@@ -71,12 +71,12 @@
 
 @media only screen and (max-width: 992px) {
   .data-table {
-    width: 60%;
+    width: 300px;
   }
 }
 
 @media only screen and (min-width: 993px) {
   .data-table {
-    width: 30%;
+    width: 500px;
   }
 }

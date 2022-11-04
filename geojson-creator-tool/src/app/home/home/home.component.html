@@ -1,12 +1,11 @@
-<div class="container-fluid">
-    <div class="row d-flex flex-row-reverse">
-        <div class="col-lg-10 col-md-9 p-0">
-            <app-map-common (mapDataEmit)="getMapData($event)"></app-map-common>
-        </div>
-        <div class="side-div col-lg-2 col-md-3 p-0 border border-start border-dark">
-            <app-header></app-header>
-            <app-create-data [map]="map" [draw]="draw" (sendIdentityFeatureData)="sendIdentityFeatureDataFn($event)"></app-create-data>
-            <app-map-styles [map]="map" [draw]="draw"></app-map-styles>
-        </div>
+<div class="main-div">
+    <div class="map-wrapper">
+        <app-map-common (mapDataEmit)="getMapData($event)"></app-map-common>
+    </div>
+    <div class="border-end border-dark side-nav-wrapper">
+        <app-header></app-header>
+        <app-create-data [map]="map" [draw]="draw" (sendIdentityFeatureData)="sendIdentityFeatureDataFn($event)">
+        </app-create-data>
+        <app-map-styles [map]="map" [draw]="draw"></app-map-styles>
     </div>
 </div>
