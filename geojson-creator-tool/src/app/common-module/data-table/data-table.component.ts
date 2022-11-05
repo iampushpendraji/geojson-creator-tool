@@ -32,7 +32,8 @@ export class DataTableComponent implements OnInit {
     }
     else {
       if (this.dataSource.features.length > 0) {
-        navigator.clipboard.writeText(JSON.stringify(this.dataSource));
+        let newDataSource = this.downloadDataService.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...this.dataSource })));
+        navigator.clipboard.writeText(JSON.stringify(newDataSource));
         this.snackbarService.openSnackbar('Copied to clipboard', 'snackbar-success');
       }
       else {

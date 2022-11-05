@@ -1,5 +1,5 @@
-<div class="draw-main p-3">
-    <span matTooltip="Draw polygon freehandly" [ngClass]="activeTool == 'freehand' ? 'active-tool' : ''"
+<div class="draw-main px-3 pb-3">
+    <span matTooltip="Hold mouse left click and draw freehand polygon like pencil sketch" [ngClass]="activeTool == 'freehand' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('freehand')">
         <img src="../../../assets/freehand-polygon.png" height="20px" alt="">
     </span>
@@ -21,7 +21,7 @@
         class="border p-2 draw-tool" (click)="startDraw('line')">
         <img src="../../../assets/draw-line.png" height="20px" alt="">
     </span>
-    <span matTooltip="Draw line freehandly" [ngClass]="activeTool == 'freehand-line' ? 'active-tool' : ''"
+    <span matTooltip="Hold mouse left click and draw freehand line like pencil sketch" [ngClass]="activeTool == 'freehand-line' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('freehand-line')">
         <img src="../../../assets/pencil-line.png" height="20px" alt="">
     </span>

@@ -47,7 +47,7 @@ export class DownloadDataService {
     var dataStr = "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    downloadAnchorNode.setAttribute("download", exportName + ".geojson");
     downloadAnchorNode.innerText = exportName;
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();

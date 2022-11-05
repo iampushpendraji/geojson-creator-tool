@@ -375,7 +375,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
           this.activeDrawMode = 'draw_freehand';
           this.draw.changeMode(this.activeDrawMode);
           this.mousePopUpMessage =
-            'Press mouse left click and draw freehand polygon';
+            'Hold mouse left click and draw freehand polygon like pencil sketch';
           break;
         case 'points':
           this.activeDrawMode = 'draw_point';

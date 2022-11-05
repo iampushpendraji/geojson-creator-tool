@@ -3,6 +3,7 @@ import { DataShareService } from 'src/app/services/data-share.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StyleServiceService } from 'src/app/services/style-service.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as turf from '@turf/turf';
 
 @Component({
   selector: 'app-upload-data',
@@ -27,7 +28,9 @@ export class UploadDataComponent implements OnInit {
     const fileReader = new FileReader();
     fileReader.readAsText(this.uploadedFile, "UTF-8");
     fileReader.onload = () => {
-      this.uploadedJsonObj = this.setGeoJsonForOurTool(JSON.parse(fileReader.result.toString()));
+      // Here we are adding markers and text fields
+      let uploadedFile = this.setStyleOnUploadedFile(fileReader.result.toString());
+      this.uploadedJsonObj = this.setGeoJsonForOurTool(uploadedFile);
       this.dataShareService.sendSourceData(this.uploadedJsonObj);
       this.styleService.setDataOnMap(this.map, this.uploadedJsonObj
       );
@@ -57,6 +60,72 @@ export class UploadDataComponent implements OnInit {
       });
     }
     return geo_json_main;
+  }
+
+  setStyleOnUploadedFile(data: any) {
+    let counter = 0,
+      data1 = JSON.parse(data),
+      temp_geo_json = JSON.parse(JSON.stringify({ ...data1 })),
+      final_temp_geo_json = JSON.parse(JSON.stringify({ ...temp_geo_json }));
+    temp_geo_json.features.forEach((element, index) => {
+      if (element.styledetails == undefined) {
+        if (element.id == undefined) {
+          final_temp_geo_json.features[index].id = 'new_feature' + Number(Math.random() + counter);
+          final_temp_geo_json.features[index].properties = { featureid: final_temp_geo_json.features[index].id };
+          final_temp_geo_json.features[index].styledetails = { id: final_temp_geo_json.features[index].id };
+          final_temp_geo_json.features[index] = this.setStyleDetailsInFeature(final_temp_geo_json, index);
+          counter++;
+        }
+        else {
+          final_temp_geo_json.features[index].properties = { featureid: final_temp_geo_json.features[index].id };
+          final_temp_geo_json.features[index].styledetails = { id: final_temp_geo_json.features[index].id };
+          final_temp_geo_json.features[index] = this.setStyleDetailsInFeature(final_temp_geo_json, index);
+        }
+      }
+    });
+    return final_temp_geo_json;
+  }
+
+  setStyleDetailsInFeature(element: any, index) {
+    let temp_element = JSON.parse(JSON.stringify({ ...element }));
+    switch (temp_element.features[index].geometry.type) {
+      case 'Polygon':
+        temp_element.features[index].styledetails = {
+          id: temp_element.features[index].id,
+          styledata: {
+            fillcolor: "#ed811c",
+            fillopacity: 0.4,
+            fillborderwidth: 2,
+            fillbordercolor: "#3b1513"
+          }
+        }
+        temp_element.features[index].measurement = {
+          squaremeters: Math.round(turf.area(temp_element) * 100) / 100
+        }
+        break;
+      case 'Point':
+        temp_element.features[index].styledetails = {
+          id: temp_element.features[index].id,
+          styledata: {
+            circleradius: 6,
+            circlecolor: "#B42222"
+          }
+        }
+        break;
+      case 'LineString':
+        temp_element.features[index].styledetails = {
+          id: temp_element.features[index].id,
+          styledata: {
+            linecolor: "#572d06",
+            linewidth: 2
+          }
+        }
+        temp_element.features[index].measurement = {
+          kilometers: turf.length(temp_element)
+        }
+        break;
+    }
+    return temp_element.features[index];
   }
 
   closeDialog() {
