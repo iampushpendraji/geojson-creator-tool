@@ -1,23 +1,23 @@
 <div class="draw-main px-3 pb-3">
-    <span matTooltip="Hold mouse left click and draw freehand polygon like pencil sketch" [ngClass]="activeTool == 'freehand' ? 'active-tool' : ''"
+    <span matTooltip="Hold mouse left click and drag mouse to draw freehand polygon like pencil sketch" [ngClass]="activeTool == 'freehand' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('freehand')">
         <img src="../../../assets/freehand-polygon.png" height="20px" alt="">
     </span>
-    <span matTooltip="Draw polygon" [ngClass]="activeTool == 'polygon' ? 'active-tool' : ''"
+    <span matTooltip="Use mouse left click to drop polygon vertices on map and for stop use mouse double click" [ngClass]="activeTool == 'polygon' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('polygon')">
         <img src="../../../assets/polygon.png" height="20px" alt="">
     </span>
-    <span matTooltip="Draw rectangle" [ngClass]="activeTool == 'square' ? 'active-tool' : ''"
+    <span matTooltip="Press mouse left click once to start drawing freehand Square and for stop only use mouse left click once" [ngClass]="activeTool == 'square' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('square')">
         <img src="../../../assets/square.png" height="20px" alt="">
     </span>
-    <span matTooltip="Draw rectangle" [ngClass]="activeTool == 'circle' ? 'active-tool' : ''"
+    <span matTooltip="Use mouse left click once then drag mouse for set radius then use mouse left click to stop" [ngClass]="activeTool == 'circle' ? 'active-tool' : ''"
         class="border p-2 draw-tool d-flex align-items-center justify-content-center" (click)="startDraw('circle')">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
           </svg>
     </span>
-    <span matTooltip="Draw line string" [ngClass]="activeTool == 'line' ? 'active-tool' : ''"
+    <span matTooltip="Use mouse left click to drop line vertices and for stop use mouse double click" [ngClass]="activeTool == 'line' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('line')">
         <img src="../../../assets/draw-line.png" height="20px" alt="">
     </span>
@@ -29,7 +29,7 @@
         (click)="startDraw('marker')">
         <img src="../../../assets/marker.png" height="20px" alt="">
     </span> -->
-    <span matTooltip="Add custom marker" [ngClass]="activeTool == 'custom-marker' ? 'active-tool' : ''"
+    <span matTooltip="Press mouse left click and add marker on map" [ngClass]="activeTool == 'custom-marker' ? 'active-tool' : ''"
         class="border p-2 draw-tool d-flex align-items-center justify-content-center" (click)="startDraw('custom-marker')">
         <img src="../../../assets/marker.png" height="20px" alt="">
     </span>
@@ -37,7 +37,7 @@
         (click)="startDraw('points')">
         <img src="../../../assets/points.png" height="20px" alt="">
     </span>
-    <span matTooltip="Enter text on Map" [ngClass]="activeTool == 'add-text' ? 'active-tool' : ''"
+    <span matTooltip="Press mouse left click to add text on map then use click to customize it" [ngClass]="activeTool == 'add-text' ? 'active-tool' : ''"
         class="border p-2 draw-tool" (click)="startDraw('add-text')">
         <mat-icon> text_fields</mat-icon>
     </span>
@@ -45,7 +45,7 @@
         class="border p-2 draw-tool" (click)="startDraw('simple-select')">
         <img src="../../../assets/palm-of-hand.png" height="20px" alt="">
     </span>
-    <span matTooltip="Layer edit mode" class="border py-2 draw-tool d-flex align-items-center justify-content-center"
+    <span matTooltip="Click on feature to edit or drag it on map" class="border py-2 draw-tool d-flex align-items-center justify-content-center"
         [ngClass]="activeTool == 'edit-mode' ? 'active-tool' : ''" (click)="editModeHandler()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
             viewBox="0 0 16 16">
@@ -69,8 +69,8 @@
 
 <div class="px-3 toggle-div">
     <!-- <mat-slide-toggle class="d-block" (change)="addLabelHandler($event)">Add Label</mat-slide-toggle> -->
-    <mat-slide-toggle class="d-block" (change)="getDrawContinousStatus($event)">Draw Continuously</mat-slide-toggle>
-    <mat-slide-toggle class="d-block" (change)="getShowTipOnMouseStatus($event)">Show Tip On Cursor</mat-slide-toggle>
+    <mat-slide-toggle class="d-block" (change)="getDrawContinousStatus($event)" color="primary">Draw Continuously</mat-slide-toggle>
+    <mat-slide-toggle #mouseTip class="d-block" (change)="getShowTipOnMouseStatus($event)" color="primary">Show Tip On Cursor</mat-slide-toggle>
 </div>
 
 <div *ngIf="activeTool == 'custom-marker' || activeTool == 'add-text'">

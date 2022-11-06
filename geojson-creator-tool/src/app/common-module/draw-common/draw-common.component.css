@@ -14,12 +14,11 @@
   row-gap: 10px;
 }
 
-.toggle-div::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+/* This is for side toggle color customization */
+/* .toggle-div::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
   background-color: blue;
-  /*replace with your color*/
 }
 
 .toggle-div::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
   background-color: skyblue;
-  /*replace with your color*/
-}
+} */

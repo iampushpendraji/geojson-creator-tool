@@ -1,20 +1,28 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import * as maplibregl from 'maplibre-gl';
-import * as turf from '@turf/turf';
-import { DataShareService } from 'src/app/services/data-share.service';
-import { IdentityFeatureServiceService } from 'src/app/services/identity-feature-service.service';
-import { MapServiceService } from 'src/app/services/map-service.service';
-import { SnackbarService } from 'src/app/services/snackbar.service';
-import { StyleServiceService } from 'src/app/services/style-service.service';
-import { MatDialog } from '@angular/material/dialog';
-import { UploadDataComponent } from '../upload-data/upload-data.component';
-import { DownloadDataService } from 'src/app/services/download-data.service';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
+import { MatSlideToggle, MatSlideToggleChange } from "@angular/material/slide-toggle";
+import * as maplibregl from "maplibre-gl";
+import * as turf from "@turf/turf";
+import { DataShareService } from "src/app/services/data-share.service";
+import { IdentityFeatureServiceService } from "src/app/services/identity-feature-service.service";
+import { MapServiceService } from "src/app/services/map-service.service";
+import { SnackbarService } from "src/app/services/snackbar.service";
+import { StyleServiceService } from "src/app/services/style-service.service";
+import { MatDialog } from "@angular/material/dialog";
+import { UploadDataComponent } from "../upload-data/upload-data.component";
+import { DownloadDataService } from "src/app/services/download-data.service";
 
 @Component({
-  selector: 'app-draw-common',
-  templateUrl: './draw-common.component.html',
-  styleUrls: ['./draw-common.component.css'],
+  selector: "app-draw-common",
+  templateUrl: "./draw-common.component.html",
+  styleUrls: ["./draw-common.component.css"],
 })
 export class DrawCommonComponent implements OnInit, AfterViewInit {
   // isMarker: boolean = true;
@@ -25,10 +33,10 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   drawCustomMarker: boolean;
   layerEditMode: boolean = false;
   geo_json_main: any = {
-    type: 'FeatureCollection',
+    type: "FeatureCollection",
     features: [],
   };
-  activeTool: string = 'simple-select';
+  activeTool: string = "simple-select";
   activeDrawMode: string;
   canDrawMarker: boolean = false;
   drawContinuously: boolean = false;
@@ -39,6 +47,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   @Input() draw: any;
   @Input() map: any;
   @Output() sendIdentityFeatureData: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('mouseTip') mouseTip: MatSlideToggle;
 
   constructor(
     private styleService: StyleServiceService,
@@ -60,31 +69,35 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
     });
     this.mapService.getCircleFeature.subscribe((data) => {
       this.circlePolygonFeature = data;
-    })
+    });
 
-    this.map.on('click', (e: any) => {
+    this.map.on("click", (e: any) => {
       if (this.canDrawMarker) {
         this.getCoordinates(e);
       }
     });
     // this.draw.add()
+    // setTimeout(() => {
+    //   this.mouseTip.checked = true;
+    //   this.mousePopupTurnOn();
+    // }, 0);
   }
 
   drawDefinations() {
-    this.map.on('draw.create', () => this.getDrawSource('create'));
-    this.map.on('draw.delete', () => this.getDrawSource('delete'));
-    this.map.on('draw.update', () => this.getDrawSource('update'));
+    this.map.on("draw.create", () => this.getDrawSource("create"));
+    this.map.on("draw.delete", () => this.getDrawSource("delete"));
+    this.map.on("draw.update", () => this.getDrawSource("update"));
     this.setIdentityFeature();
   }
 
   setIdentityFeature() {
-    this.map.on('click', 'YourMapSourceIdLineString', (e: any) => {
+    this.map.on("click", "YourMapSourceIdLineString", (e: any) => {
       this.geomClickHandler(e);
     });
-    this.map.on('click', 'YourMapSourceIdPolygon', (e: any) => {
+    this.map.on("click", "YourMapSourceIdPolygon", (e: any) => {
       this.geomClickHandler(e);
     });
-    this.map.on('click', 'YourMapSourceIdPoint', (e: any) => {
+    this.map.on("click", "YourMapSourceIdPoint", (e: any) => {
       this.geomClickHandler(e);
     });
     this.setMouseEffectOnMap();
@@ -93,9 +106,8 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   geomClickHandler(e: any) {
     if (this.canDeleteGeom) {
       this.deleteFeatureOnClick(e);
-    }
-    else {
-      if (this.activeTool == 'simple-select') {
+    } else {
+      if (this.activeTool == "simple-select") {
         this.sendIdentityFeatureStatus(e);
       }
     }
@@ -104,7 +116,9 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   deleteFeatureOnClick(e: any) {
     let temp_geo_json = { ...this.geo_json_main };
     const activeFeatureId = e.features[0].properties.featureid;
-    let index = temp_geo_json.features.findIndex(m => m.id == activeFeatureId);
+    let index = temp_geo_json.features.findIndex(
+      (m) => m.id == activeFeatureId
+    );
     temp_geo_json.features.splice(index, 1);
     this.styleService.setDataOnMap(this.map, temp_geo_json);
     this.dataShareService.sendSourceData(temp_geo_json);
@@ -112,25 +126,25 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
 
   setMouseEffectOnMap() {
     // Change the cursor to a pointer when the mouse is over the states layer.
-    this.map.on('mouseenter', 'YourMapSourceIdLineString', () => {
-      this.map.getCanvas().style.cursor = 'pointer';
+    this.map.on("mouseenter", "YourMapSourceIdLineString", () => {
+      this.map.getCanvas().style.cursor = "pointer";
     });
-    this.map.on('mouseenter', 'YourMapSourceIdPolygon', () => {
-      this.map.getCanvas().style.cursor = 'pointer';
+    this.map.on("mouseenter", "YourMapSourceIdPolygon", () => {
+      this.map.getCanvas().style.cursor = "pointer";
     });
-    this.map.on('mouseenter', 'YourMapSourceIdPoint', () => {
-      this.map.getCanvas().style.cursor = 'pointer';
+    this.map.on("mouseenter", "YourMapSourceIdPoint", () => {
+      this.map.getCanvas().style.cursor = "pointer";
     });
 
     // Change it back to a pointer when it leaves.
-    this.map.on('mouseleave', 'YourMapSourceIdLineString', () => {
-      this.map.getCanvas().style.cursor = '';
+    this.map.on("mouseleave", "YourMapSourceIdLineString", () => {
+      this.map.getCanvas().style.cursor = "";
     });
-    this.map.on('mouseleave', 'YourMapSourceIdPolygon', () => {
-      this.map.getCanvas().style.cursor = '';
+    this.map.on("mouseleave", "YourMapSourceIdPolygon", () => {
+      this.map.getCanvas().style.cursor = "";
     });
-    this.map.on('mouseleave', 'YourMapSourceIdPoint', () => {
-      this.map.getCanvas().style.cursor = '';
+    this.map.on("mouseleave", "YourMapSourceIdPoint", () => {
+      this.map.getCanvas().style.cursor = "";
     });
   }
 
@@ -139,7 +153,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
     let objKeys: any = Object.keys(properties);
     let newArrayOfObj: any[] = [];
     objKeys.forEach((element) => {
-      let newObj = { name: '', value: '' };
+      let newObj = { name: "", value: "" };
       newObj.name = element;
       newObj.value = properties[element];
       newArrayOfObj.push(newObj);
@@ -167,19 +181,22 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   }
 
   getDrawSource(type: string) {
-    if (type == 'create') {
+    if (type == "create") {
       this.setGeoJsonMain();
       // this.map.getSource('YourMapSource').setData(this.geo_json_main);
       this.styleService.setDataOnMap(this.map, this.geo_json_main);
+      if (!this.drawContinuously) {
+        this.mousePopUpMessage = `Welcome to Your Map<br><sub>Please select any drawing type and enjoy !!</sub>`;
+      }
     }
-    if (type == 'update') {
+    if (type == "update") {
       if (this.layerEditMode) {
         this.editModeGeoJsonCheck++;
       }
     }
     this.sendDrawSourceData();
     if (this.drawContinuously || this.canDeleteGeom) {
-      if (type !== 'create') {
+      if (type !== "create") {
         return;
       }
       setTimeout(() => {
@@ -190,21 +207,23 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
         this.afterDrawCreated();
       }, 0);
     }
+    if (this.showMapCursorTip) {
+      this.mousePopupTurnOn();
+    }
   }
 
   setGeoJsonMain() {
     let drawData = this.draw.getAll();
     let featureData;
-    if (this.activeDrawMode == 'draw_radius') {
+    if (this.activeDrawMode == "draw_radius") {
       featureData = this.circlePolygonFeature;
       featureData.id = this.draw.getAll().features[0].id;
       this.circlePolygonFeature = undefined;
-    }
-    else {
+    } else {
       featureData = drawData.features[0];
     }
     if (featureData) {
-      featureData.properties['featureid'] = drawData.features[0].id;
+      featureData.properties["featureid"] = drawData.features[0].id;
       featureData = this.setStyleDetails(featureData);
       this.geo_json_main.features.push(featureData);
       this.geo_json_main.features = this.getUniqueValue();
@@ -215,76 +234,73 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   setStyleDetails(data: any) {
     let featureStyleData: any = data,
       polygonObj: any = {
-        'fillcolor': '#ed811c',
-        'fillopacity': 0.4,
-        'fillborderwidth': 2,
-        'fillbordercolor': '#3b1513'
+        fillcolor: "#ed811c",
+        fillopacity: 0.4,
+        fillborderwidth: 2,
+        fillbordercolor: "#3b1513",
       },
       lineObj = {
-        'linecolor': '#572d06',
-        'linewidth': 2
+        linecolor: "#572d06",
+        linewidth: 2,
       },
       pointObj = {
-        'circleradius': 6,
-        'circlecolor': '#B42222'
+        circleradius: 6,
+        circlecolor: "#B42222",
       },
       markerObj = {
-        'height': '20',
-        'width': '20',
-        'markername': 'marker'
+        height: "20",
+        width: "20",
+        markername: "marker",
       },
       textObj = {
-        'height': '20',
-        'width': 'fit-content',
-        'color': 'blue',
-        'textfontsize': '15',
-        'textname': 'Edit Text'
-      }
+        height: "20",
+        width: "fit-content",
+        color: "blue",
+        textfontsize: "15",
+        textname: "Edit Text",
+      };
 
-
-    if (data.geometry.type == 'Polygon') {
+    if (data.geometry.type == "Polygon") {
       const area = turf.area(data);
       featureStyleData.styledetails = {
         id: data.id,
-        styledata: polygonObj
-      }
+        styledata: polygonObj,
+      };
       featureStyleData.measurement = {
-        squaremeters: Math.round(area * 100) / 100
+        squaremeters: Math.round(area * 100) / 100,
       };
     }
 
-    if (data.geometry.type == 'Point') {
+    if (data.geometry.type == "Point") {
       if (!this.drawCustomMarker) {
         featureStyleData.styledetails = {
           id: data.id,
-          styledata: pointObj
-        }
-      }
-      else {
+          styledata: pointObj,
+        };
+      } else {
         if (this.drawText) {
           featureStyleData.styledetails = {
             id: data.id,
-            styledata: textObj
-          }
-        }
-        else {
+            styledata: textObj,
+          };
+        } else {
           featureStyleData.styledetails = {
             id: data.id,
-            styledata: markerObj
-          }
+            styledata: markerObj,
+          };
         }
-        featureStyleData.geometry.type = 'marker';
+        featureStyleData.geometry.type = "marker";
       }
     }
 
-    if (data.geometry.type == 'LineString') {
+    if (data.geometry.type == "LineString") {
       const distance = turf.length(this.draw.getAll());
       featureStyleData.styledetails = {
         id: data.id,
-        styledata: lineObj
-      }
+        styledata: lineObj,
+      };
       featureStyleData.measurement = {
-        kilometers: distance
+        kilometers: distance,
       };
     }
 
@@ -312,16 +328,14 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
 
   afterDrawCreated() {
     if (this.layerEditMode) {
-      this.activeTool = 'edit-mode';
-    }
-    else {
-      this.activeTool = 'simple-select';
+      this.activeTool = "edit-mode";
+    } else {
+      this.activeTool = "simple-select";
     }
     // this.isMarker = false;
-    if (this.showMapCursorTip) {
-      this.dataShareService.removeMapPopUp();
-    }
-    this.mousePopUpMessage = `Welcome to Your Map<br><sub>Please select any drawing type and enjoy !!</sub>`;
+    // if (this.showMapCursorTip) {
+    //   this.dataShareService.removeMapPopUp();
+    // }
   }
 
   getCoordinates(e: any) {
@@ -337,95 +351,95 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       .setLngLat(coord)
       .addTo(this.map);
     if (!this.drawContinuously) {
-      this.handleMarker('deactive');
-      this.activeTool = 'simple-select';
+      this.handleMarker("deactive");
+      this.activeTool = "simple-select";
     }
   }
 
   startDraw(type: string) {
     if (!this.layerEditMode) {
       this.activeTool = type;
-      if (this.activeTool !== 'marker') {
-        this.handleMarker('deactive');
+      if (this.activeTool !== "marker") {
+        this.handleMarker("deactive");
       }
-      if (this.activeTool !== 'custom-marker' || 'add-text') {
+      if (this.activeTool !== "custom-marker" || "add-text") {
         this.drawCustomMarker = false;
       }
-      if (type !== 'delete-tool') {
+      if (type !== "delete-tool") {
         this.canDeleteGeom = false;
         this.styleService.canDeleteMarker = false;
       }
       switch (type) {
-        case 'polygon':
-          this.activeDrawMode = 'draw_polygon';
+        case "polygon":
+          this.activeDrawMode = "draw_polygon";
           this.draw.changeMode(this.activeDrawMode);
-          this.mousePopUpMessage = 'Use mouse left click to start draw polygon';
+          this.mousePopUpMessage = "Use mouse left click to drop polygon vertices on map and for stop use mouse double click";
           break;
-        case 'circle':
-          this.activeDrawMode = 'draw_radius';
-          this.draw.changeMode(this.activeDrawMode);
-          this.mousePopUpMessage = 'Use mouse left one time for start and same for stop';
-          break;
-        case 'line':
-          this.activeDrawMode = 'draw_line_string';
-          this.draw.changeMode(this.activeDrawMode);
-          this.mousePopUpMessage = 'Use mouse left click to start draw polygon';
-          break;
-        case 'freehand':
-          this.activeDrawMode = 'draw_freehand';
+        case "circle":
+          this.activeDrawMode = "draw_radius";
           this.draw.changeMode(this.activeDrawMode);
           this.mousePopUpMessage =
-            'Hold mouse left click and draw freehand polygon like pencil sketch';
+            "Use mouse left click one time then drag mouse for set radius and use mouse left click to stop";
           break;
-        case 'points':
-          this.activeDrawMode = 'draw_point';
+        case "line":
+          this.activeDrawMode = "draw_line_string";
           this.draw.changeMode(this.activeDrawMode);
-          this.mousePopUpMessage = 'Use mouse left click to ploat point';
+          this.mousePopUpMessage = "Use mouse left click to drop line vertices and for stop use mouse double click";
           break;
-        case 'marker':
-          this.activeDrawMode = 'active';
+        case "freehand":
+          this.activeDrawMode = "draw_freehand";
+          this.draw.changeMode(this.activeDrawMode);
+          this.mousePopUpMessage =
+            "Hold mouse left click and drag mouse to draw freehand polygon like pencil sketch";
+          break;
+        case "points":
+          this.activeDrawMode = "draw_point";
+          this.draw.changeMode(this.activeDrawMode);
+          this.mousePopUpMessage = "Use mouse left click to ploat point";
+          break;
+        case "marker":
+          this.activeDrawMode = "active";
           this.handleMarker(this.activeDrawMode);
-          this.mousePopUpMessage = 'Use mouse left click and draw marker';
+          this.mousePopUpMessage = "Use mouse left click and draw marker";
           break;
-        case 'square':
-          this.activeDrawMode = 'draw_rectangle';
+        case "square":
+          this.activeDrawMode = "draw_rectangle";
           this.draw.changeMode(this.activeDrawMode);
           this.mousePopUpMessage =
-            'Press mouse left click to start drawing freehand Square';
+            "Press mouse left click one time to start drawing freehand Square and for stop only use mouse left click once";
           break;
-        case 'freehand-line':
-          this.activeDrawMode = 'draw_freehand_line';
+        case "freehand-line":
+          this.activeDrawMode = "draw_freehand_line";
           this.draw.changeMode(this.activeDrawMode);
           this.mousePopUpMessage =
-            'Press mouse left click and draw freehand line';
+            "Hold mouse left click and draw on map like pencil skectch";
           break;
-        case 'custom-marker':
+        case "custom-marker":
           this.drawCustomMarker = true;
           this.drawText = false;
-          this.activeDrawMode = 'draw_point';
+          this.activeDrawMode = "draw_point";
           this.draw.changeMode(this.activeDrawMode);
           this.mousePopUpMessage =
-            'Press mouse left click and add marker on map';
+            "Press mouse left click and add marker on map";
           break;
-        case 'add-text':
+        case "add-text":
           this.drawCustomMarker = true;
           this.drawText = true;
-          this.activeDrawMode = 'draw_point';
+          this.activeDrawMode = "draw_point";
+          this.draw.changeMode(this.activeDrawMode);
+          this.mousePopUpMessage = "Press mouse left click to add text on map";
+          break;
+        case "simple-select":
+          this.activeDrawMode = "simple_select";
           this.draw.changeMode(this.activeDrawMode);
           this.mousePopUpMessage =
-            'Press mouse left click to add text on map';
+            "Welcome to Your Map<br><sub>Please select any drawing type and enjoy !!</sub>";
           break;
-        case 'simple-select':
-          this.activeDrawMode = 'simple_select';
-          this.draw.changeMode(this.activeDrawMode);
-          this.mousePopUpMessage =
-            'Welcome to Your Map<br><sub>Please select any drawing type and enjoy !!</sub>';
-          break;
-        case 'delete-tool':
+        case "delete-tool":
+          this.draw.changeMode("simple_select");
           this.canDeleteGeom = true;
           this.styleService.canDeleteMarker = true;
-          this.mousePopUpMessage =
-            'Click on feature which you want to delte';
+          this.mousePopUpMessage = "Click on feature which you want to delte";
           break;
         default:
           break;
@@ -434,45 +448,53 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
         this.dataShareService.useMapPopUp(
           this.map,
           this.mousePopUpMessage,
-          'color: gray; font-family: fantasy;'
+          "color: gray; font-family: fantasy;"
         );
       }
-    }
-    else {
-      this.snackbarService.openSnackbar('Please turn of edit layer to use this feature', 'snackbar-err');
+    } else {
+      this.snackbarService.openSnackbar(
+        "Please turn of edit layer to use this feature",
+        "snackbar-err"
+      );
     }
   }
 
   editModeHandler() {
     this.layerEditMode = !this.layerEditMode;
     if (this.layerEditMode) {
-      this.activeTool = 'edit-mode';
-      this.mousePopUpMessage = "You can drag or edit feature geometry";
+      this.activeTool = "edit-mode";
+      this.mousePopUpMessage = "Click on feature to edit or drag it on map";
       if (this.showMapCursorTip) {
         this.dataShareService.useMapPopUp(
           this.map,
           this.mousePopUpMessage,
-          'color: gray; font-family: fantasy;'
+          "color: gray; font-family: fantasy;"
         );
       }
-      this.draw.changeMode('simple_select');
+      this.draw.changeMode("simple_select");
       // this.isMarker = false;
-      let tempGeoJSON = this.downloadDataService.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...this.geo_json_main })));
+      let tempGeoJSON = this.downloadDataService.changeTypeMarkerToPoint(
+        JSON.parse(JSON.stringify({ ...this.geo_json_main }))
+      );
       this.styleService.deleteAllMarkers();
       this.draw.add(tempGeoJSON);
-      this.map.getSource('YourMapSource').setData({
-        type: 'FeatureCollection',
+      this.map.getSource("YourMapSource").setData({
+        type: "FeatureCollection",
         features: [],
       });
     } else {
-      this.activeTool = 'simple-select';
+      this.activeTool = "simple-select";
       this.geo_json_main = this.setGeoJsonForStopEditMode();
       // this.map.getSource('YourMapSource').setData(this.geo_json_main);
       if (this.editModeGeoJsonCheck > 0) {
         this.styleService.setDataOnMap(this.map, this.geo_json_main, false);
-      }
-      else {
-        this.styleService.setDataOnMap(this.map, this.geo_json_main, false, false);
+      } else {
+        this.styleService.setDataOnMap(
+          this.map,
+          this.geo_json_main,
+          false,
+          false
+        );
       }
       this.dataShareService.sendSourceData(this.geo_json_main);
       this.draw.deleteAll();
@@ -485,8 +507,8 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   // This is temp
   changeTypeMarkerToPoint(tempData: any) {
     tempData.features.forEach((element, index) => {
-      if (element.geometry.type == 'marker') {
-        tempData.features[index].geometry.type = 'Point';
+      if (element.geometry.type == "marker") {
+        tempData.features[index].geometry.type = "Point";
       }
     });
     return tempData;
@@ -494,36 +516,45 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
 
   setGeoJsonForStopEditMode() {
     let updated_draw_data = this.draw.getAll();
-    this.geo_json_main.features.forEach((geo_json_main_element, geo_json_main_index) => {
-      updated_draw_data.features.forEach((updated_draw_data_element, updated_draw_data_index) => {
-        if (updated_draw_data_element.id == geo_json_main_element.id) {
-          this.geo_json_main.features[geo_json_main_index].geometry.coordinates = updated_draw_data.features[updated_draw_data_index].geometry.coordinates;
-        }
-      });
-    });
-    return this.geo_json_main
+    this.geo_json_main.features.forEach(
+      (geo_json_main_element, geo_json_main_index) => {
+        updated_draw_data.features.forEach(
+          (updated_draw_data_element, updated_draw_data_index) => {
+            if (updated_draw_data_element.id == geo_json_main_element.id) {
+              this.geo_json_main.features[
+                geo_json_main_index
+              ].geometry.coordinates =
+                updated_draw_data.features[
+                  updated_draw_data_index
+                ].geometry.coordinates;
+            }
+          }
+        );
+      }
+    );
+    return this.geo_json_main;
   }
 
   stopDraw() {
-    this.activeTool = 'simple-select';
+    this.activeTool = "simple-select";
     if (this.showMapCursorTip) {
       this.mousePopUpMessage = `Welcome to Your Map<br><sub>Please select any drawing type and enjoy !!</sub>`;
       this.dataShareService.useMapPopUp(
         this.map,
         this.mousePopUpMessage,
-        'color: gray; font-family: fantasy;'
+        "color: gray; font-family: fantasy;"
       );
     }
     // this.draw.trash();
-    this.draw.changeMode('simple_select');
+    this.draw.changeMode("simple_select");
     // this.isMarker = false;
-    this.handleMarker('deactive');
+    this.handleMarker("deactive");
     this.canDeleteGeom = false;
     this.styleService.canDeleteMarker = false;
   }
 
   handleMarker(type: string) {
-    if (type == 'active') {
+    if (type == "active") {
       this.draw.trash();
       this.canDrawMarker = true;
     } else {
@@ -540,16 +571,24 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
 
   getShowTipOnMouseStatus(event: MatSlideToggleChange) {
     if (event.checked) {
-      this.showMapCursorTip = true;
-      this.dataShareService.useMapPopUp(
-        this.map,
-        this.mousePopUpMessage,
-        'color: gray; font-family: fantasy;'
-      );
+      this.mousePopupTurnOn();
     } else {
-      this.showMapCursorTip = false;
-      this.dataShareService.removeMapPopUp();
+      this.mousePopupTurnOff();
     }
+  }
+
+  mousePopupTurnOn() {
+    this.showMapCursorTip = true;
+    this.dataShareService.useMapPopUp(
+      this.map,
+      this.mousePopUpMessage,
+      "color: gray; font-family: fantasy;"
+    );
+  }
+
+  mousePopupTurnOff() {
+    this.showMapCursorTip = false;
+    this.dataShareService.removeMapPopUp();
   }
 
   sendDrawSourceData() {
@@ -563,20 +602,23 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
 
   addLabelHandler(event: any) {
     if (event.checked == true) {
-      let tempGeoJSON1 = this.downloadDataService.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...this.geo_json_main })));
-      let tempGeoJSON = this.changeTypePolygonToPoint(JSON.parse(JSON.stringify({ ...tempGeoJSON1 })));
+      let tempGeoJSON1 = this.downloadDataService.changeTypeMarkerToPoint(
+        JSON.parse(JSON.stringify({ ...this.geo_json_main }))
+      );
+      let tempGeoJSON = this.changeTypePolygonToPoint(
+        JSON.parse(JSON.stringify({ ...tempGeoJSON1 }))
+      );
       this.mapService.addLabelFn(tempGeoJSON);
-      console.log(this.geo_json_main)
-    }
-    else {
+      console.log(this.geo_json_main);
+    } else {
       this.mapService.removeLabelFn();
     }
   }
 
   changeTypePolygonToPoint(data: any) {
-    let tempData = { ...data }
+    let tempData = { ...data };
     tempData.features.forEach((element, index) => {
-      if (element.geometry.type == 'Polygon') {
+      if (element.geometry.type == "Polygon") {
         let centerPoint = turf.centroid(element);
         tempData.features[index].geometry = centerPoint.geometry;
       }
@@ -587,47 +629,57 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   undo() {
     if (!this.layerEditMode) {
       this.styleService.handleUndo();
-    }
-    else {
-      this.snackbarService.openSnackbar('Please turn of edit layer to use undo', 'snackbar-err');
+    } else {
+      this.snackbarService.openSnackbar(
+        "Please turn of edit layer to use undo",
+        "snackbar-err"
+      );
     }
   }
 
   redo() {
     if (!this.layerEditMode) {
       this.styleService.handleRedo();
-    }
-    else {
-      this.snackbarService.openSnackbar('Please turn of edit layer to use redo', 'snackbar-err');
+    } else {
+      this.snackbarService.openSnackbar(
+        "Please turn of edit layer to use redo",
+        "snackbar-err"
+      );
     }
   }
 
   showUploadDialog() {
     const dialogRef = this.matDialog.open(UploadDataComponent, {
-      width: '250px',
+      width: "250px",
       data: { map: this.map },
-      enterAnimationDuration: '200ms',
-      exitAnimationDuration: '200ms'
+      enterAnimationDuration: "200ms",
+      exitAnimationDuration: "200ms",
     });
   }
 
   downloadData() {
     let dataSource = JSON.parse(JSON.stringify({ ...this.geo_json_main }));
-    this.downloadDataFinal(dataSource, 'geojson');
+    this.downloadDataFinal(dataSource, "geojson");
   }
 
   downloadDataFinal(dataSource: any, downloadType: string) {
     if (dataSource) {
       if (dataSource.features.length > 0) {
-        dataSource = this.downloadDataService.changeTypeMarkerToPoint(JSON.parse(JSON.stringify({ ...dataSource })));
+        dataSource = this.downloadDataService.changeTypeMarkerToPoint(
+          JSON.parse(JSON.stringify({ ...dataSource }))
+        );
         this.downloadDataService.downloadData(downloadType, { ...dataSource });
+      } else {
+        this.snackbarService.openSnackbar(
+          "Please draw atleast one geometry",
+          "snackbar-err"
+        );
       }
-      else {
-        this.snackbarService.openSnackbar('Please draw atleast one geometry', 'snackbar-err');
-      }
-    }
-    else {
-      this.snackbarService.openSnackbar('Please draw atleast one geometry', 'snackbar-err');
+    } else {
+      this.snackbarService.openSnackbar(
+        "Please draw atleast one geometry",
+        "snackbar-err"
+      );
     }
   }
 
@@ -635,7 +687,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
     this.draw.deleteAll();
     this.stopDraw();
     this.geo_json_main = {
-      type: 'FeatureCollection',
+      type: "FeatureCollection",
       features: [],
     };
     this.dataShareService.sendSourceData(this.geo_json_main);

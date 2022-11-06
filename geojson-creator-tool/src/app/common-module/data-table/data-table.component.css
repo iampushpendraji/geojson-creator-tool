@@ -50,7 +50,16 @@
 .toggler-btn {
   position: absolute;
   top: 50%;
-  left: -25px;
+  left: -50px;
+}
+
+.toggler-btn mat-icon {
+  height: 35px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px 0 0 50px;
 }
 
 .table-div {
