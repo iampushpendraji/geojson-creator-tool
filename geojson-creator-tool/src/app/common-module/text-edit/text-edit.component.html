@@ -1,14 +1,14 @@
-<div>
+<div class="mb-1">
     <label for="textname">Name</label>
     : <input type="text" name="" id="textname" [(ngModel)]="textName">
 </div>
 
-<div>
+<div class="mb-1">
     <label for="color">Color</label>
     : <input id="color" [(colorPicker)]="textColor" [style.background]="textColor" />
 </div>
 
-<div>
+<!-- <div>
     <label for="height">Height</label>
     : <input type="text" name="" id="height" [(ngModel)]="textHeight">
 </div>
@@ -16,19 +16,19 @@
 <div>
     <label for="width">Width</label>
     : <input type="text" name="" id="width" [(ngModel)]="textWidth">
-</div>
+</div> -->
 
-<div>
+<div class="mb-1">
     <label for="textFontSize">Size</label>
-    : <input type="text" name="" id="textFontSize" [(ngModel)]="textFontSize">
+    : <input type="number" name="" id="textFontSize" [(ngModel)]="textFontSize" min="5">
 </div>
 
-<div>
+<div class="mb-1">
     <label for="lat">Lat</label>
     : <input type="text" name="" id="lat" [(ngModel)]="textLat">
 </div>
 
-<div>
+<div class="mb-1">
     <label for="lng">Lng</label>
     : <input type="text" name="" id="lng" [(ngModel)]="textLng">
 </div>

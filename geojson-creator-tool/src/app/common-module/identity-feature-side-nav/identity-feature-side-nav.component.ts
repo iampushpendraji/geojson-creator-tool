@@ -181,6 +181,29 @@ export class IdentityFeatureSideNavComponent implements OnInit {
   }
 
   submitData() {
+    if (this.geo_json_main.features[this.CurrentFeatureindex].geometry.type == 'Polygon') {
+      if (this.fillOpacity >= 0 && this.fillBorderWidth >= 0) {
+        this.finallySubmitData();
+      }
+    }
+    if (this.geo_json_main.features[this.CurrentFeatureindex].geometry.type == 'marker') {
+      if (this.markerHeight >= 10 && this.markerWidth >= 10) {
+        this.finallySubmitData();
+      }
+    }
+    if (this.geo_json_main.features[this.CurrentFeatureindex].geometry.type == 'LineString') {
+      if (this.lineWidth >= 1) {
+        this.finallySubmitData();
+      }
+    }
+    if (this.geo_json_main.features[this.CurrentFeatureindex].geometry.type == 'Point') {
+      if (this.circleRadius >= 1) {
+        this.finallySubmitData();
+      }
+    }
+  }
+
+  finallySubmitData() {
     if (this.featureForm.status == 'VALID') {
       this.setDataIn_geo_json_main(
         this.featureForm.get('identityFormData').value

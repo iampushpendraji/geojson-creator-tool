@@ -16,16 +16,16 @@ export class TextEditComponent implements OnInit {
   textWidth: string;
   textName: string;
   textId: string;
-  textFontSize: string;
+  textFontSize: Number;
   geo_json_main: any;
   map: any;
-  constructor(private dataShareService: DataShareService, private styleService: StyleServiceService, private dialogRef: MatDialogRef<TextEditComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { 
-    if(data) {
+  constructor(private dataShareService: DataShareService, private styleService: StyleServiceService, private dialogRef: MatDialogRef<TextEditComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    if (data) {
       this.textId = data.textField.id;
-      this.textColor =  data.textField.styledetails.styledata.color;
-      this.textName =  data.textField.styledetails.styledata.textname;
-      this.textHeight =  data.textField.styledetails.styledata.height;
-      this.textWidth =  data.textField.styledetails.styledata.width;
+      this.textColor = data.textField.styledetails.styledata.color;
+      this.textName = data.textField.styledetails.styledata.textname;
+      this.textHeight = data.textField.styledetails.styledata.height;
+      this.textWidth = data.textField.styledetails.styledata.width;
       this.textFontSize = data.textField.styledetails.styledata.textfontsize;
       this.textLat = data.textField.geometry.coordinates[1];
       this.textLng = data.textField.geometry.coordinates[0];
@@ -35,22 +35,24 @@ export class TextEditComponent implements OnInit {
   }
 
   submitBtn() {
-    this.dialogRef.close(
-      {
-        textColor: this.textColor,
-        textLat: this.textLat,
-        textLng: this.textLng,
-        textHeight: this.textHeight,
-        textWidth: this.textWidth,
-        textName: this.textName,
-        textFontSize: this.textFontSize,
-        id: this.textId
-      });
+    if (this.textFontSize >= 5) {
+      this.dialogRef.close(
+        {
+          textColor: this.textColor,
+          textLat: this.textLat,
+          textLng: this.textLng,
+          textHeight: this.textHeight,
+          textWidth: this.textWidth,
+          textName: this.textName,
+          textFontSize: this.textFontSize,
+          id: this.textId
+        });
+    }
   }
 
-  deleteText(){
-    let temp_geo_json = JSON.parse(JSON.stringify({...this.geo_json_main  }));
-    let index = this.geo_json_main.features.findIndex( m => m.id == this.textId );
+  deleteText() {
+    let temp_geo_json = JSON.parse(JSON.stringify({ ...this.geo_json_main }));
+    let index = this.geo_json_main.features.findIndex(m => m.id == this.textId);
     temp_geo_json.features.splice(index, 1);
     this.dataShareService.sendSourceData(temp_geo_json);
     this.styleService.setDataOnMap(this.map, temp_geo_json, true, false);

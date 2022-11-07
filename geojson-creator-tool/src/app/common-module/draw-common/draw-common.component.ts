@@ -357,6 +357,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   }
 
   startDraw(type: string) {
+    this.identityFeatureService.sendShowIdentityFeatureStatus(false);
     if (!this.layerEditMode) {
       this.activeTool = type;
       if (this.activeTool !== "marker") {

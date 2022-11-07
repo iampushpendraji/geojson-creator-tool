@@ -73,3 +73,7 @@ input.ng-invalid.ng-touched {
 label {
   width: 150px;
 }
+
+input[type=number]:out-of-range {
+  outline-color: red;
+}

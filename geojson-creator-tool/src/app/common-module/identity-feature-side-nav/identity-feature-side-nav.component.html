@@ -20,12 +20,12 @@
     
                         <div class="d-flex justify-content-center mt-2">
                             <label for="marker-height">Height</label>
-                            : <input id="marker-height" type="number" [(ngModel)]="markerHeight" />
+                            : <input id="marker-height" type="number" [(ngModel)]="markerHeight" min="10" />
                         </div>
     
                         <div class="d-flex justify-content-center my-2">
                             <label for="marker-width">Width</label>
-                            : <input id="marker-width" type="number" [(ngModel)]="markerWidth" />
+                            : <input id="marker-width" type="number" [(ngModel)]="markerWidth" min="10" />
                         </div>
     
                         <!-- <div>
@@ -49,12 +49,12 @@
     
                         <div class="d-flex justify-content-center mb-2">
                             <label for="fill-opacity">Border Width</label>
-                            : <input id="fill-opacity" type="number" [(ngModel)]="fillBorderWidth" />
+                            : <input id="fill-opacity" type="number" [(ngModel)]="fillBorderWidth" min="0" />
                         </div>
     
                         <div class="d-flex justify-content-center mb-2">
                             <label for="fill-opacity">Fill Opacity</label>
-                            : <input id="fill-opacity" type="number" [(ngModel)]="fillOpacity" />
+                            : <input id="fill-opacity" type="number" [(ngModel)]="fillOpacity" min="0" />
                         </div>
                     </div>
     
@@ -67,7 +67,7 @@
     
                         <div class="d-flex justify-content-center mb-2">
                             <label for="fill-opacity">Line Width</label>
-                            : <input id="fill-opacity" type="number" [(ngModel)]="lineWidth" />
+                            : <input id="fill-opacity" type="number" [(ngModel)]="lineWidth" min="1" />
                         </div>
                     </div>
     
@@ -81,7 +81,7 @@
     
                         <div class="d-flex justify-content-center mb-2">
                             <label for="fill-opacity">Circle Radius</label>
-                            : <input id="fill-opacity" type="number" [(ngModel)]="circleRadius" />
+                            : <input id="fill-opacity" type="number" [(ngModel)]="circleRadius" min="2" />
                         </div>
                     </div>
                 </div>

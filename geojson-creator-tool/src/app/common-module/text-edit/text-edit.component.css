@@ -3,3 +3,7 @@ label {
     text-align: left;
     display: inline-block;
 }
+
+input[type=number]:out-of-range {
+    outline-color: red;
+}
