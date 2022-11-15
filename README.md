@@ -1,5 +1,10 @@
 # geojson-creator-tool
 geojson-cretor-tool is an online GeoJSON creator tool based on Maplibre and created with Angular, It's a single page web application where user can create, edit, upload or download geojson data online
 
-Demo - https://geojsoncreator.com/
-       https://geojson-creator-tool.web.app/
+Here we have running example you can try it 
+It is totally free
+
+Demo URL 1 - https://geojsoncreator.com/
+
+
+Demo URL 2 - https://geojson-creator-tool.web.app/
