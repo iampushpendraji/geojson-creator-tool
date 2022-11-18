@@ -9,7 +9,10 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./data-table.component.css']
 })
 export class DataTableComponent implements OnInit {
-  dataSource: any;
+  dataSource: any = {
+    type: "FeatureCollection",
+    features: [],
+  };;
   showDataTable: boolean;
   tableLoaded: boolean = true;
   downloadType: string = 'geojson';

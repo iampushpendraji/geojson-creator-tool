@@ -26,6 +26,7 @@
     "mapbox-gl-draw-freehand-mode": "^2.1.0",
     "mapbox-gl-draw-line-freehand": "^1.0.0",
     "mapbox-gl-draw-rectangle-mode": "^1.0.4",
+    "mapbox-gl-draw-rotate-mode": "^1.0.4",
     "maplibre-gl": "^1.15.3",
     "ngx-color-picker": "^13.0.0",
     "numeral": "^2.0.6",

@@ -453,11 +453,21 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
         );
       }
     } else {
+      let message = !this.isRotateModeActive ? "Please turn of edit layer to use this feature" : "Please turn off layer rotate mode to use this feature";
       this.snackbarService.openSnackbar(
-        "Please turn of edit layer to use this feature",
+        message,
         "snackbar-err"
       );
     }
+  }
+
+  isRotateModeActive: boolean = false;
+  rotateModeHandler() {
+    this.editModeHandler();
+    setTimeout(() => {
+      this.draw.changeMode('rotate_mode');
+    }, 0);
+    this.isRotateModeActive = !this.isRotateModeActive;
   }
 
   editModeHandler() {
@@ -487,7 +497,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       this.activeTool = "simple-select";
       this.geo_json_main = this.setGeoJsonForStopEditMode();
       // this.map.getSource('YourMapSource').setData(this.geo_json_main);
-      if (this.editModeGeoJsonCheck > 0) {
+      if (this.editModeGeoJsonCheck > 0 || this.isRotateModeActive) {
         this.styleService.setDataOnMap(this.map, this.geo_json_main, false);
       } else {
         this.styleService.setDataOnMap(
@@ -696,6 +706,8 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
     this.mapService.removeSourceFn();
     this.styleService.deleteAllMarkers();
     this.mapService.addSourceFn();
+    this.layerEditMode = false;
+    this.isRotateModeActive = false;
     // this.styleService.setDataOnMap(this.map, this.geo_json_main);
     // this.map.getSource('YourMapSource').setData(this.geo_json_main);
   }

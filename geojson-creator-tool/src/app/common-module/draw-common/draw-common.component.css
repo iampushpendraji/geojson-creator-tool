@@ -3,7 +3,7 @@
 }
 
 .active-tool {
-  background: cyan;
+  background: cyan !important;
 }
 
 .draw-main {
@@ -12,6 +12,12 @@
   text-align: center;
   column-gap: 10px;
   row-gap: 10px;
+}
+
+.draw-main button {
+  background: #FFFFFF;
+  height: 50px;
+  /* width: 50px; */
 }
 
 /* This is for side toggle color customization */

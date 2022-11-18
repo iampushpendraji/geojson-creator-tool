@@ -3,6 +3,7 @@ import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
 import FreehandMode from 'mapbox-gl-draw-freehand-mode';
 import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import DrawLineFreehand from 'mapbox-gl-draw-line-freehand';
+import RotateMode from 'mapbox-gl-draw-rotate-mode';
 import * as maplibregl from 'maplibre-gl';
 import * as turf from '@turf/turf';
 import * as numeral from 'numeral';
@@ -185,7 +186,8 @@ export class MapServiceService {
         draw_radius: this.DrawCircle,
         draw_freehand: FreehandMode,
         draw_rectangle: DrawRectangle,
-        draw_freehand_line: DrawLineFreehand
+        draw_freehand_line: DrawLineFreehand,
+        rotate_mode: RotateMode
       })
     });
   }

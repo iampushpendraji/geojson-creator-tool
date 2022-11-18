@@ -1,78 +1,95 @@
 <div class="draw-main px-3 pb-3">
-    <span matTooltip="Hold mouse left click and drag mouse to draw freehand polygon like pencil sketch"
-        [ngClass]="activeTool == 'freehand' ? 'active-tool' : ''" class="border p-2 draw-tool"
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Hold mouse left click and drag mouse to draw freehand polygon like pencil sketch"
+        [ngClass]="activeTool == 'freehand' ? 'active-tool' : ''" class="border p-2 draw-tool p-flex"
         (click)="startDraw('freehand')">
-        <img src="../../../assets/freehand-polygon.png" height="20px" alt="">
-    </span>
-    <span matTooltip="Use mouse left click to drop polygon vertices on map and for stop use mouse double click"
-        [ngClass]="activeTool == 'polygon' ? 'active-tool' : ''" class="border p-2 draw-tool"
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+        </svg>
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Use mouse left click to drop polygon vertices on map and for stop use mouse double click"
+        [ngClass]="activeTool == 'polygon' ? 'active-tool' : ''" class="border p-2 draw-tool p-flex"
         (click)="startDraw('polygon')">
-        <img src="../../../assets/polygon.png" height="20px" alt="">
-    </span>
-    <span
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pentagon" viewBox="0 0 16 16">
+            <path d="M7.685 1.545a.5.5 0 0 1 .63 0l6.263 5.088a.5.5 0 0 1 .161.539l-2.362 7.479a.5.5 0 0 1-.476.349H4.099a.5.5 0 0 1-.476-.35L1.26 7.173a.5.5 0 0 1 .161-.54l6.263-5.087Zm8.213 5.28a.5.5 0 0 0-.162-.54L8.316.257a.5.5 0 0 0-.631 0L.264 6.286a.5.5 0 0 0-.162.538l2.788 8.827a.5.5 0 0 0 .476.349h9.268a.5.5 0 0 0 .476-.35l2.788-8.826Z"/>
+        </svg>
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive"
         matTooltip="Press mouse left click once to start drawing freehand Square and for stop only use mouse left click once"
-        [ngClass]="activeTool == 'square' ? 'active-tool' : ''" class="border p-2 draw-tool"
+        [ngClass]="activeTool == 'square' ? 'active-tool' : ''" class="border p-2 draw-tool p-flex"
         (click)="startDraw('square')">
-        <img src="../../../assets/square.png" height="20px" alt="">
-    </span>
-    <span matTooltip="Use mouse left click once then drag mouse for set radius then use mouse left click to stop"
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
+            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+        </svg>
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Use mouse left click once then drag mouse for set radius then use mouse left click to stop"
         [ngClass]="activeTool == 'circle' ? 'active-tool' : ''"
-        class="border p-2 draw-tool d-flex align-items-center justify-content-center" (click)="startDraw('circle')">
+        class="border p-2 draw-tool p-flex" (click)="startDraw('circle')">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle"
             viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
         </svg>
-    </span>
-    <span matTooltip="Use mouse left click to drop line vertices and for stop use mouse double click"
-        [ngClass]="activeTool == 'line' ? 'active-tool' : ''" class="border p-2 draw-tool" (click)="startDraw('line')">
-        <img src="../../../assets/draw-line.png" height="20px" alt="">
-    </span>
-    <span matTooltip="Hold mouse left click and draw freehand line like pencil sketch"
-        [ngClass]="activeTool == 'freehand-line' ? 'active-tool' : ''" class="border p-2 draw-tool"
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Use mouse left click to drop line vertices and for stop use mouse double click"
+        [ngClass]="activeTool == 'line' ? 'active-tool' : ''" class="border p-2 draw-tool p-flex" (click)="startDraw('line')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
+        </svg>
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Hold mouse left click and draw freehand line like pencil sketch"
+        [ngClass]="activeTool == 'freehand-line' ? 'active-tool' : ''" class="border p-2 draw-tool p-flex"
         (click)="startDraw('freehand-line')">
-        <img src="../../../assets/pencil-line.png" height="20px" alt="">
-    </span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+        </svg>
+    </button>
     <!-- <span [ngClass]="activeTool == 'marker' ? 'active-tool' : ''" class="border p-2 draw-tool"
         (click)="startDraw('marker')">
         <img src="../../../assets/marker.png" height="20px" alt="">
     </span> -->
-    <span matTooltip="Press mouse left click and add marker on map"
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Press mouse left click and add marker on map"
         [ngClass]="activeTool == 'custom-marker' ? 'active-tool' : ''"
-        class="border p-2 draw-tool d-flex align-items-center justify-content-center"
+        class="border p-2 draw-tool p-flex"
         (click)="startDraw('custom-marker')">
-        <img src="../../../assets/marker.png" height="20px" alt="">
-    </span>
-    <span matTooltip="Draw points" [ngClass]="activeTool == 'points' ? 'active-tool' : ''"
-        class="border p-2 draw-tool d-flex align-items-center justify-content-center" (click)="startDraw('points')">
-        <img src="../../../assets/points.png" height="20px" alt="">
-    </span>
-    <span matTooltip="Press mouse left click to add text on map then use click to customize it"
-        [ngClass]="activeTool == 'add-text' ? 'active-tool' : ''" class="border p-2 draw-tool"
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+        </svg>
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Draw points" [ngClass]="activeTool == 'points' ? 'active-tool' : ''"
+        class="border p-2 draw-tool p-flex" (click)="startDraw('points')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+            <circle cx="8" cy="8" r="8"/>
+        </svg>
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Press mouse left click to add text on map then use click to customize it"
+        [ngClass]="activeTool == 'add-text' ? 'active-tool' : ''" class="border p-2 draw-tool p-flex"
         (click)="startDraw('add-text')">
         <mat-icon> text_fields</mat-icon>
-    </span>
+    </button>
 </div>
 
 <br>
 
 <div class="draw-main px-3 mb-3">
-    <span matTooltip="Simple select mode" [ngClass]="activeTool == 'simple-select' ? 'active-tool' : ''"
-        class="border p-2 draw-tool" (click)="startDraw('simple-select')">
-        <img src="../../../assets/palm-of-hand.png" height="20px" alt="">
-    </span>
-    <span matTooltip="Undo changes" class="border p-2 draw-tool" (click)="undo()">
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Simple select mode" [ngClass]="activeTool == 'simple-select' ? 'active-tool' : ''"
+        class="border p-2 draw-tool p-flex" (click)="startDraw('simple-select')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-index-thumb-fill" viewBox="0 0 16 16">
+            <path d="M8.5 1.75v2.716l.047-.002c.312-.012.742-.016 1.051.046.28.056.543.18.738.288.273.152.456.385.56.642l.132-.012c.312-.024.794-.038 1.158.108.37.148.689.487.88.716.075.09.141.175.195.248h.582a2 2 0 0 1 1.99 2.199l-.272 2.715a3.5 3.5 0 0 1-.444 1.389l-1.395 2.441A1.5 1.5 0 0 1 12.42 16H6.118a1.5 1.5 0 0 1-1.342-.83l-1.215-2.43L1.07 8.589a1.517 1.517 0 0 1 2.373-1.852L5 8.293V1.75a1.75 1.75 0 0 1 3.5 0z"/>
+        </svg>
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Undo changes" class="border p-2 draw-tool p-flex" (click)="undo()">
         <mat-icon>undo</mat-icon>
-    </span>
-    <span matTooltip="Redo changes" class="border p-2 draw-tool" (click)="redo()">
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Redo changes" class="border p-2 draw-tool p-flex" (click)="redo()">
         <mat-icon>redo</mat-icon>
-    </span>
-    <span matTooltip="Delete features" [ngClass]="activeTool == 'delete-tool' ? 'active-tool' : ''"
-        class="border p-2 draw-tool" (click)="startDraw('delete-tool')">
+    </button>
+    <button [disabled]="layerEditMode || isRotateModeActive" matTooltip="Delete features" [ngClass]="activeTool == 'delete-tool' ? 'active-tool' : ''"
+        class="border p-2 draw-tool p-flex" (click)="startDraw('delete-tool')">
         <mat-icon>delete_sweep</mat-icon>
-    </span>
-    <span matTooltip="Click on feature to edit or drag it on map"
-        class="border py-2 draw-tool d-flex align-items-center justify-content-center"
-        [ngClass]="activeTool == 'edit-mode' ? 'active-tool' : ''" (click)="editModeHandler()">
+    </button>
+    <button [disabled]="isRotateModeActive || geo_json_main.features.length == 0 " matTooltip="Click on feature to edit or drag it on map"
+        class="border py-2 draw-tool p-flex"
+        [ngClass]="activeTool == 'edit-mode' && !isRotateModeActive ? 'active-tool' : ''" (click)="editModeHandler()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
             viewBox="0 0 16 16">
             <path
@@ -80,7 +97,10 @@
             <path fill-rule="evenodd"
                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
         </svg>
-    </span>
+    </button>
+    <button [disabled]="layerEditMode && !isRotateModeActive || geo_json_main.features.length == 0 " matTooltip="Rotate features on map holding mouse left click" [ngClass]="isRotateModeActive ? 'active-tool' : ''" class="border py-2 draw-tool p-flex" (click)="rotateModeHandler()">
+        <mat-icon>rotate_left</mat-icon>
+    </button>
 </div>
 
 <div class="px-3 toggle-div">
@@ -97,6 +117,11 @@
         text</h3>
 </div>
 
+<div *ngIf="isRotateModeActive">
+    <h3 class="alert alert-danger text-dark mt-3 p-2 text-center border border-danger shadow-sm"
+        style="font-size: 15px; line-height: 15px;">* Please do not drag or edit points while you are using rotate mode</h3>
+</div>
+
 <div class="d-flex justify-content-center">
     <button class="mt-3 btn btn-sm btn-danger me-1" (click)="resetData()">Reset</button>
     <button class="mt-3 btn btn-sm btn-secondary" (click)="showDataTable()">Show Table</button>
@@ -104,7 +129,7 @@
 
 <div class="d-flex justify-content-center">
     <button class="mt-3 btn btn-sm btn-warning me-1" (click)="showUploadDialog()">Upload</button>
-    <button class="mt-3 btn btn-sm btn-success d-flex align-items-center" (click)="downloadData()">
+    <button [disabled]="geo_json_main.features.length == 0 || layerEditMode || isRotateModeActive" class="mt-3 btn btn-sm btn-success d-flex align-items-center" (click)="downloadData()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download"
             viewBox="0 0 16 16">
             <path
