@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MapCommonComponent } from 'src/app/common-map/map-common/map-common.component';
+import { DataShareService } from 'src/app/services/data-share.service';
+import { DownloadDataService } from 'src/app/services/download-data.service';
 
 @Component({
   selector: 'app-home',
@@ -7,22 +9,43 @@ import { MapCommonComponent } from 'src/app/common-map/map-common/map-common.com
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  @HostListener('window:beforeunload', ['$event'])
+  showMessage($event) {
+    if (this.temp_geo_json_main.features.length === 0) {
+      return
+    } else {
+      $event.returnValue = 'Your data will be lost!';
+    }
+
+  }
   map: any;
   draw: any;
-  
+  temp_geo_json_main: any = {
+    type: "FeatureCollection",
+    features: [],
+  };
   mapCommonComponent: MapCommonComponent;
 
   @ViewChild(MapCommonComponent) set content(content: MapCommonComponent) {
-    if(content) {
+    if (content) {
       this.mapCommonComponent = content;
     }
   }
 
   identityFeatureData: any;
 
-  constructor() { }
+  constructor(private dataShareService: DataShareService, private downloadDataService: DownloadDataService) { }
 
   ngOnInit(): void {
+    this.dataShareService.getSourceData.subscribe((data: any) => {
+      this.temp_geo_json_main = data;
+    });
+    this.downloadDataService.downloadDone.subscribe((data: any) => {
+      this.temp_geo_json_main = {
+        type: "FeatureCollection",
+        features: [],
+      }
+    });
   }
 
   getMapData(mapData) {
@@ -30,7 +53,7 @@ export class HomeComponent implements OnInit {
     this.draw = mapData.draw;
   }
 
-  sendIdentityFeatureDataFn(data: any){
+  sendIdentityFeatureDataFn(data: any) {
     this.mapCommonComponent.sendIdentityFeatureData(data);
   }
 

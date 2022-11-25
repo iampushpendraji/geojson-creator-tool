@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import tokml from 'geojson-to-kml';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DownloadDataService {
-
+  downloadDone: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
   downloadData(downloadType: string, data: any) {
@@ -41,6 +41,7 @@ export class DownloadDataService {
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
+    this.downloadDone.emit();
   }
 
   downloadObjectAsJson(exportObj: any, exportName: string) {
@@ -52,6 +53,7 @@ export class DownloadDataService {
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
+    this.downloadDone.emit();
   }
 
   changeTypeMarkerToPoint(tempData: any) {

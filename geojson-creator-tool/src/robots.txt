@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://geojsoncreator.web.app/sitemap.xml
+Sitemap: https://geojsoncreator.com/sitemap.xml

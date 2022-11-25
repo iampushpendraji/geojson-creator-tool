@@ -3,5 +3,8 @@
         <h2>UPLOAD FILE</h2>
         <mat-icon role="button" (click)="closeDialog()">close</mat-icon>
     </div>
-    <input type="file" name="" id="file" (change)="uploadFile($event)" accept=".json, .geojson" width="30px"/>
+    <input type="file" name="" id="file" (change)="uploadFile($event)" accept=".json, .geojson" multiple="false" width="30px"/>
+    <div class="p-flex mt-1 mb-3 text-primary">
+        size - 4 MB (MAX)
+    </div>
 </div>
