@@ -1,9 +1,54 @@
-#map-style{
+#map-style {
     position: absolute;
     bottom: 0;
+    width: 100%;
 }
 
-.active-map-style{
+.active-map-style {
     background-color: darkred;
     color: white;
+}
+
+.map-type {
+    position: absolute;
+    bottom: 31px;
+}
+
+#about {
+    position: absolute;
+    background-color: red;
+    width: 100%;
+    z-index: 1;
+    transition: transform 1s linear;
+}
+
+.hide-about-us {
+    transform: translatey(-28px);
+}
+
+.show-about-us {
+    transform: translatey(-100%);
+}
+
+header {
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+}
+
+#author-image {
+    background-image: url('../../../assets//Author.jpeg');
+    height: 150px;
+    width: 100%;
+    background-position: top;
+    background-size: cover;
+    clip-path: circle(28% at 50% 37%);
+}
+
+#about a:hover {
+    color: wheat;
 }

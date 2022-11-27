@@ -11,5 +11,7 @@
 }
 
 .side-nav-wrapper{
+    position: relative;
     width: 300px;
+    overflow: hidden;
 }

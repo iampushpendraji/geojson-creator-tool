@@ -13,6 +13,7 @@ export class MapStylesComponent implements OnInit {
   @Input() draw: any;
   geo_json_main;
   currentMapStyle: string = 'open-streets-map';
+  showAboutUs: boolean;
 
   getRasterTile(tile: string) {
     return {

@@ -45,3 +45,7 @@ button:disabled:hover {
 .snackbar-err .mat-simple-snackbar-action {
     color: #fff;
 }
+
+.pointer {
+    cursor: pointer;
+}

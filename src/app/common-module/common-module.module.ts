@@ -15,6 +15,7 @@ import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { IconListDialogComponent } from './icon-list-dialog/icon-list-dialog.component';
 import { TextEditComponent } from './text-edit/text-edit.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { TextEditComponent } from './text-edit/text-edit.component';
     IdentityFeatureSideNavComponent,
     ConfirmBoxComponent,
     IconListDialogComponent,
-    TextEditComponent
+    TextEditComponent,
+    AboutUsComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { TextEditComponent } from './text-edit/text-edit.component';
     UploadDataComponent,
     DataTableComponent,
     IdentityFeatureSideNavComponent,
-    ConfirmBoxComponent
+    ConfirmBoxComponent,
+    AboutUsComponent
   ],
 })
 export class CommonModuleModule { }

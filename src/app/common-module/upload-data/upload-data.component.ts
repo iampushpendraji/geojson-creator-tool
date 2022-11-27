@@ -93,7 +93,7 @@ export class UploadDataComponent implements OnInit {
         temp_element.features[index].styledetails = {
           id: temp_element.features[index].id,
           styledata: {
-            fillcolor: "#ed811c",
+            fillcolor: "#10CAF0",
             fillopacity: 0.4,
             fillborderwidth: 2,
             fillbordercolor: "#3b1513"

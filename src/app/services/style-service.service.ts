@@ -123,7 +123,7 @@ export class StyleServiceService {
     this.circleRadiusArray.push(6);
     this.lineColorArray.push('#BF93E4');
     this.lineWidthArray.push(5);
-    this.fillColorArray.push('#ed811c');
+    this.fillColorArray.push('#10CAF0');
     this.fillBorderColorArray.push('#3b1513');
     this.fillBorderWidthArray.push(2);
     this.fillOpacityArray.push(0.4);

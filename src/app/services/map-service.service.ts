@@ -269,7 +269,7 @@ export class MapServiceService {
       'type': 'fill',
       'source': 'YourMapSource',
       'paint': {
-        'fill-color': '#ed811c',
+        'fill-color': '#10CAF0',
         'fill-opacity': 0.4
       },
       'filter': ['==', '$type', 'Polygon']

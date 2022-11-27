@@ -234,7 +234,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   setStyleDetails(data: any) {
     let featureStyleData: any = data,
       polygonObj: any = {
-        fillcolor: "#ed811c",
+        fillcolor: "#10CAF0",
         fillopacity: 0.4,
         fillborderwidth: 2,
         fillbordercolor: "#3b1513",
