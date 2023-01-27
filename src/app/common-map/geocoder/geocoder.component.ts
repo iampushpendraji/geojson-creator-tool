@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import * as maplibregl from 'maplibre-gl';
+import * as maplibregl from 'mapbox-gl';
 import { GeocoderServiceService } from 'src/app/services/geocoder-service.service';
 import { MapServiceService } from 'src/app/services/map-service.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';

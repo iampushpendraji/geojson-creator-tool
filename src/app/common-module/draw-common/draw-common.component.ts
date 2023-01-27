@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MatSlideToggle, MatSlideToggleChange } from "@angular/material/slide-toggle";
-import * as maplibregl from "maplibre-gl";
+import * as maplibregl from "mapbox-gl";
 import * as turf from "@turf/turf";
 import { DataShareService } from "src/app/services/data-share.service";
 import { IdentityFeatureServiceService } from "src/app/services/identity-feature-service.service";
