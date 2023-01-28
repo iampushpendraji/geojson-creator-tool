@@ -12,7 +12,7 @@ export class MapStylesComponent implements OnInit {
   @Input() map: any;
   @Input() draw: any;
   geo_json_main;
-  currentMapStyle: string = 'open-streets-map';
+  currentMapStyle: string = 'streets';
   showAboutUs: boolean;
 
   getRasterTile(tile: string) {
@@ -47,13 +47,11 @@ export class MapStylesComponent implements OnInit {
   }
 
   setMapStyle(styleType: string) {
-    let timeOut = 0;
     this.removeSourceAndLayer();
     this.currentMapStyle = styleType;
     switch (styleType) {
       case 'maplibre-default':
         this.map.setStyle('https://demotiles.maplibre.org/style.json');
-        timeOut = 2000;
         break;
       case 'open-streets-map':
         this.map.setStyle(this.mapService.style);
@@ -64,12 +62,18 @@ export class MapStylesComponent implements OnInit {
       case 'wikimedia':
         this.map.setStyle(this.getRasterTile('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png'));
         break;
+      case 'satellite':
+        this.map.setStyle('mapbox://styles/mapbox/satellite-streets-v12');
+        break;
+      case 'streets':
+        this.map.setStyle('mapbox://styles/mapbox/streets-v12');
+        break;
       default:
         break;
     }
     setTimeout(() => {
       this.addExistingSource();
-    }, timeOut);
+    }, 100);
   }
 
   removeSourceAndLayer() {

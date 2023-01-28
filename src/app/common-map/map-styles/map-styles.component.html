@@ -1,8 +1,10 @@
 <div id="map-style">
     <div class="d-flex border map-type">
+        <div role="button" class="px-2" [ngClass]="currentMapStyle == 'streets' ? 'active-map-style' : ''" (click)="setMapStyle('streets')">Streets</div>
         <div role="button" class="px-2" [ngClass]="currentMapStyle == 'open-streets-map' ? 'active-map-style' : ''" (click)="setMapStyle('open-streets-map')">OSM</div>
-        <div role="button" class="px-2" [ngClass]="currentMapStyle == 'maplibre-default' ? 'active-map-style' : ''" (click)="setMapStyle('maplibre-default')">Maplib</div>
-        <div role="button" class="px-2" [ngClass]="currentMapStyle == 'raster-tile' ? 'active-map-style' : ''" (click)="setMapStyle('raster-tile')">Raster</div>
+        <div role="button" class="px-2" [ngClass]="currentMapStyle == 'satellite' ? 'active-map-style' : ''" (click)="setMapStyle('satellite')">Satelite</div>
+        <!-- <div role="button" class="px-2" [ngClass]="currentMapStyle == 'maplibre-default' ? 'active-map-style' : ''" (click)="setMapStyle('maplibre-default')">Maplib</div> -->
+        <!-- <div role="button" class="px-2" [ngClass]="currentMapStyle == 'raster-tile' ? 'active-map-style' : ''" (click)="setMapStyle('raster-tile')">Raster</div> -->
     </div>
     <!-- ABOUT ME DIV -->
     <div id="about" class="text-center text-light bg-dark" [ngClass]="showAboutUs ? 'show-about-us' : 'hide-about-us'">

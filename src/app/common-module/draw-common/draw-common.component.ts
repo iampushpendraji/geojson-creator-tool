@@ -592,7 +592,11 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   getShowMapProjectionStatus(event: MatSlideToggleChange) {
     if (event.checked) {
       if (this.map.getZoom() < 2) {
-        this.map.flyTo([78, 23], 2500);
+        this.map.flyTo({
+          center: [78, 23],
+          zoom: 1,
+          essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+        });
       }
       this.map.setProjection('mercator');
     }
