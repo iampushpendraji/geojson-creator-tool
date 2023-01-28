@@ -47,6 +47,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   @Input() draw: any;
   @Input() map: any;
   @Output() sendIdentityFeatureData: EventEmitter<any> = new EventEmitter<any>();
+  @Output() getShowGeocoderStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('mouseTip') mouseTip: MatSlideToggle;
 
   constructor(
@@ -585,6 +586,28 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
       this.mousePopupTurnOn();
     } else {
       this.mousePopupTurnOff();
+    }
+  }
+
+  getShowMapProjectionStatus(event: MatSlideToggleChange) {
+    if (event.checked) {
+      if (this.map.getZoom() < 2) {
+        this.map.flyTo([78, 23], 2500);
+      }
+      this.map.setProjection('mercator');
+    }
+    else {
+      this.map.setProjection('globe')
+    }
+  }
+
+  sendShowGeocoderStatus(event: MatSlideToggleChange) {
+    this.getShowGeocoderStatus.emit(event.checked);
+    if (event.checked) {
+      this.mapService.removeControlGeocoder();
+    }
+    else {
+      this.mapService.addControlGeocoder();
     }
   }
 

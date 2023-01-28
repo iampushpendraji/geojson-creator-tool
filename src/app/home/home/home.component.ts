@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
     }
 
   }
+  showGeocoder: boolean = false;
   map: any;
   draw: any;
   temp_geo_json_main: any = {
@@ -55,6 +56,10 @@ export class HomeComponent implements OnInit {
 
   sendIdentityFeatureDataFn(data: any) {
     this.mapCommonComponent.sendIdentityFeatureData(data);
+  }
+
+  getShowGeocoderStatus(status: any){
+    this.showGeocoder = status;
   }
 
 }

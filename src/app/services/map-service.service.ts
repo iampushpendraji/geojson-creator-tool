@@ -15,6 +15,7 @@ import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 })
 export class MapServiceService {
   getCircleFeature: EventEmitter<any> = new EventEmitter<any>();
+  geocoder: any;
   map: maplibregl.Map | undefined;
   draw: any;
   style: any = {
@@ -200,7 +201,7 @@ export class MapServiceService {
       container: mapContainer, // container ID
       // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
       style: 'mapbox://styles/mapbox/streets-v12', // style URL
-      center: [-74.5, 40], // starting position [lng, lat]
+      center: [78, 23], // starting position [lng, lat]
       zoom: 0, // starting zoom
       projection: 'globe'
     });
@@ -225,7 +226,7 @@ export class MapServiceService {
       mapboxgl: maplibregl,
       reverseGeocode: true
     })
-    return geocoder;
+    this.geocoder = geocoder;
   }
 
   coordinatesGeocoder(query) {
@@ -280,7 +281,16 @@ export class MapServiceService {
     this.map?.addControl(new maplibregl.NavigationControl(), 'bottom-left');
     this.map?.addControl(this.initializeGeolocator(), 'bottom-left')
     this.map?.addControl(this.draw, 'bottom-left');
-    this.map?.addControl(this.initializeGeocoder(), 'top-left');
+    this.initializeGeocoder();
+    this.map?.addControl(this.geocoder, 'top-left');
+  }
+
+  addControlGeocoder() {
+    this.map?.addControl(this.geocoder, 'top-left');
+  }
+
+  removeControlGeocoder() {
+    this.map?.removeControl(this.geocoder);
   }
 
   getMapData() {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IdentityFeatureSideNavComponent } from 'src/app/common-module/identity-feature-side-nav/identity-feature-side-nav.component';
 import { MapServiceService } from 'src/app/services/map-service.service';
 
@@ -8,6 +8,7 @@ import { MapServiceService } from 'src/app/services/map-service.service';
   styleUrls: ['./map-common.component.css'],
 })
 export class MapCommonComponent implements OnInit {
+  @Input() showGeocoder: boolean = false;
   @Output() mapDataEmit: EventEmitter<any> = new EventEmitter<any>();
 
   identityFeatureSideNavCompontent: IdentityFeatureSideNavComponent;
