@@ -4,15 +4,18 @@ import FreehandMode from 'mapbox-gl-draw-freehand-mode';
 import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import DrawLineFreehand from 'mapbox-gl-draw-line-freehand';
 import RotateMode from 'mapbox-gl-draw-rotate-mode';
-import * as maplibregl from 'maplibre-gl';
+import * as maplibregl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 import * as numeral from 'numeral';
+import { environment } from 'src/environments/environment';
+import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapServiceService {
   getCircleFeature: EventEmitter<any> = new EventEmitter<any>();
+  geocoder: any;
   map: maplibregl.Map | undefined;
   draw: any;
   style: any = {
@@ -110,7 +113,7 @@ export class MapServiceService {
         if (state.line.isValid()) {
           const lineGeoJson = state.line.toGeoJSON();
           const circleFeature = circleFromTwoVertexLineString(lineGeoJson);
-          this.getCircleFeature.emit(JSON.parse(JSON.stringify({...circleFeature})));
+          this.getCircleFeature.emit(JSON.parse(JSON.stringify({ ...circleFeature })));
           this.map.fire('draw.create', {
             features: [circleFeature],
           });
@@ -193,13 +196,15 @@ export class MapServiceService {
   }
 
   initializeMap(mapContainer: string) {
+    maplibregl.accessToken = environment.at;
     this.map = new maplibregl.Map({
-      container: mapContainer, // container id
-      // 'https://demotiles.maplibre.org/style.json', // style URL
-      center: [0, 0],
-      zoom: 1
+      container: mapContainer, // container ID
+      // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+      style: 'mapbox://styles/mapbox/streets-v12', // style URL
+      center: [78, 23], // starting position [lng, lat]
+      zoom: 0, // starting zoom
+      projection: 'globe'
     });
-    this.map.setStyle(this.style);
   }
 
   initializeGeolocator() {
@@ -212,11 +217,80 @@ export class MapServiceService {
     return geoLocator
   }
 
+  initializeGeocoder() {
+    const geocoder = new MapboxGeocoder({
+      accessToken: environment.at,
+      localGeocoder: this.coordinatesGeocoder,
+      zoom: 4,
+      placeholder: 'Try: -40, 170',
+      mapboxgl: maplibregl,
+      reverseGeocode: true
+    })
+    this.geocoder = geocoder;
+  }
+
+  coordinatesGeocoder(query) {
+    // Match anything which looks like
+    // decimal degrees coordinate pair.
+    const matches = query.match(
+      /^[ ]*(?:Lat: )?(-?\d+\.?\d*)[, ]+(?:Lng: )?(-?\d+\.?\d*)[ ]*$/i
+    );
+    if (!matches) {
+      return null;
+    }
+
+    function coordinateFeature(lng, lat) {
+      return {
+        center: [lng, lat],
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat]
+        },
+        place_name: 'Lat: ' + lat + ' Lng: ' + lng,
+        place_type: ['coordinate'],
+        properties: {},
+        type: 'Feature'
+      };
+    }
+
+    const coord1 = Number(matches[1]);
+    const coord2 = Number(matches[2]);
+    const geocodes = [];
+
+    if (coord1 < -90 || coord1 > 90) {
+      // must be lng, lat
+      geocodes.push(coordinateFeature(coord1, coord2));
+    }
+
+    if (coord2 < -90 || coord2 > 90) {
+      // must be lat, lng
+      geocodes.push(coordinateFeature(coord2, coord1));
+    }
+
+    if (geocodes.length === 0) {
+      // else could be either lng, lat or lat, lng
+      geocodes.push(coordinateFeature(coord1, coord2));
+      geocodes.push(coordinateFeature(coord2, coord1));
+    }
+
+    return geocodes;
+  };
+
   addControlsOnMap() {
     this.map?.addControl(new maplibregl.FullscreenControl(), 'bottom-left');
     this.map?.addControl(new maplibregl.NavigationControl(), 'bottom-left');
     this.map?.addControl(this.initializeGeolocator(), 'bottom-left')
     this.map?.addControl(this.draw, 'bottom-left');
+    this.initializeGeocoder();
+    this.map?.addControl(this.geocoder, 'top-left');
+  }
+
+  addControlGeocoder() {
+    this.map?.addControl(this.geocoder, 'top-left');
+  }
+
+  removeControlGeocoder() {
+    this.map?.removeControl(this.geocoder);
   }
 
   getMapData() {

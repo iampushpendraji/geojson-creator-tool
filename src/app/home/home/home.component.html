@@ -1,10 +1,10 @@
 <div class="main-div">
     <div class="map-wrapper">
-        <app-map-common (mapDataEmit)="getMapData($event)"></app-map-common>
+        <app-map-common [showGeocoder]="showGeocoder" (mapDataEmit)="getMapData($event)"></app-map-common>
     </div>
     <div class="border-end border-dark side-nav-wrapper">
         <app-header></app-header>
-        <app-create-data [map]="map" [draw]="draw" (sendIdentityFeatureData)="sendIdentityFeatureDataFn($event)">
+        <app-create-data [map]="map" [draw]="draw" (sendIdentityFeatureData)="sendIdentityFeatureDataFn($event)" (getShowGeocoderStatus)="getShowGeocoderStatus($event)">
         </app-create-data>
         <app-map-styles [map]="map" [draw]="draw"></app-map-styles>
     </div>

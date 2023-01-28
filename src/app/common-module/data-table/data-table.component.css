@@ -5,8 +5,8 @@
   top: 0;
   /* width: 30%; */
   height: 100%;
-  background-color: aliceblue;
-  border-left: 1px solid gray;
+  background-color: #e2f2f0;
+  /* border-left: 1px solid white; */
   transition: transform 0.5s;
 }
 
