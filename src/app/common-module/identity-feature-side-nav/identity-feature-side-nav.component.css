@@ -17,8 +17,8 @@
   margin: auto 0;
   width: 400px;
   height: 50%;
-  background-color: aliceblue;
-  border: 1px solid gray;
+  background-color: #e2f2f0;
+  /* border: 1px solid gray; */
   border-left: none;
   transition: transform 0.5s;
 }

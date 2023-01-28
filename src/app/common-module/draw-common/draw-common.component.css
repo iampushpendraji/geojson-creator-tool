@@ -3,7 +3,8 @@
 }
 
 .active-tool {
-  background: cyan !important;
+  background: #0DCAF0 !important;
+  color: #FFFFFF;
 }
 
 .draw-main {
