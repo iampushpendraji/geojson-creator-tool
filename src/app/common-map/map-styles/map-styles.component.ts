@@ -38,6 +38,7 @@ export class MapStylesComponent implements OnInit {
       ]
     }
   }
+
   constructor(private mapService: MapServiceService, private dataShareService: DataShareService, private styleService: StyleServiceService) { }
 
   ngOnInit(): void {
@@ -73,7 +74,7 @@ export class MapStylesComponent implements OnInit {
     }
     setTimeout(() => {
       this.addExistingSource();
-    }, 100);
+    }, 1000);
   }
 
   removeSourceAndLayer() {
@@ -83,24 +84,24 @@ export class MapStylesComponent implements OnInit {
 
   addExistingSource() {
     let counter = 0,
-        removedMarkerGeoJson1 = { ...this.geo_json_main },
-        removedMarkerGeoJson = JSON.parse(JSON.stringify(removedMarkerGeoJson1));
-        if(this.geo_json_main){
-          this.geo_json_main.features.forEach((element, index) => {
-            if(element.geometry.type == 'marker') {
-              removedMarkerGeoJson.features.splice(index - counter, 1);
-              counter ++;
-            }
-          });
-          this.mapService.addSourceFn(removedMarkerGeoJson);
-          // this.styleService.setColorArrayData(this.map);
-          this.styleService.setDataOnMap(this.map, this.geo_json_main, true, false);
+      removedMarkerGeoJson1 = { ...this.geo_json_main },
+      removedMarkerGeoJson = JSON.parse(JSON.stringify(removedMarkerGeoJson1));
+    if (this.geo_json_main) {
+      this.geo_json_main.features.forEach((element, index) => {
+        if (element.geometry.type == 'marker') {
+          removedMarkerGeoJson.features.splice(index - counter, 1);
+          counter++;
         }
-        else{
-          this.mapService.addSourceFn();
-          // this.styleService.setColorArrayData(this.map);
-          // this.styleService.setDataOnMap(this.map, this.geo_json_main);
-        }
+      });
+      this.mapService.addSourceFn(removedMarkerGeoJson);
+      // this.styleService.setColorArrayData(this.map);
+      this.styleService.setDataOnMap(this.map, this.geo_json_main, true, false);
+    }
+    else {
+      this.mapService.addSourceFn();
+      // this.styleService.setColorArrayData(this.map);
+      // this.styleService.setDataOnMap(this.map, this.geo_json_main);
+    }
   }
 
 }
