@@ -1,9 +1,0 @@
-label {
-    width: 50px;
-    text-align: left;
-    display: inline-block;
-}
-
-input[type=number]:out-of-range {
-    outline-color: red;
-}

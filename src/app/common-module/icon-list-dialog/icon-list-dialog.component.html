@@ -1,3 +1,0 @@
-<span *ngFor="let marker of markerList">
-    <img class="p-2" [ngStyle]="marker == activeMarker ? {'background' : 'red'} : {'' : ''}" role="button" [src]="'../../../assets/marker-icons/all_maki_icons/svgs/'+ marker + '.svg'" alt="" (click)="sendMarkerName(marker)" />
-</span>
