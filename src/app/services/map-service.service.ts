@@ -4,7 +4,7 @@ import FreehandMode from 'mapbox-gl-draw-freehand-mode';
 import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import DrawLineFreehand from 'mapbox-gl-draw-line-freehand';
 import RotateMode from 'mapbox-gl-draw-rotate-mode';
-import * as maplibregl from 'mapbox-gl';
+import * as maplibregl from 'maplibre-gl';
 import * as turf from '@turf/turf';
 import * as numeral from 'numeral';
 import { environment } from 'src/environments/environment';
@@ -196,14 +196,14 @@ export class MapServiceService {
   }
 
   initializeMap(mapContainer: string) {
-    maplibregl.accessToken = environment.at;
+    // maplibregl.accessToken = environment.at;
     this.map = new maplibregl.Map({
       container: mapContainer, // container ID
       // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-      style: 'mapbox://styles/mapbox/streets-v12', // style URL
+      style: this.style, // style URL
       center: [78, 23], // starting position [lng, lat]
       zoom: 0, // starting zoom
-      projection: 'globe'
+      // projection: 'globe'
     });
   }
 
