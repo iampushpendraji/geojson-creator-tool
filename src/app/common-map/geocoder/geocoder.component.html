@@ -2,7 +2,7 @@
     <div class="row m-0" *ngIf="showSearchDiv">
         <div class="row m-0 p-0">
             <input autocomplete="off" type="text" id="search-input" class="col-11" #searchValue
-                (keydown.enter)="getGeocode(searchValue.value);lngLatForm.reset" placeholder="Search Address" />
+                (keyup)="getAddresSuggestion(searchValue.value)" (keydown.enter)="getGeocode(searchValue.value);lngLatForm.reset" placeholder="Search Address" />
             <button class="close-btn col-1" (click)="clearGeocode();searchValue.value=''">X</button>
         </div>
         <div class="row m-0 p-0">

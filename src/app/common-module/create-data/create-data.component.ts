@@ -9,7 +9,7 @@ export class CreateDataComponent implements OnInit {
   @Input() map: any;
   @Input() draw: any;
   @Output() sendIdentityFeatureData: EventEmitter<any> = new EventEmitter<any>();
-  @Output() getShowGeocoderStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
+  // @Output() getShowGeocoderStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -20,8 +20,8 @@ export class CreateDataComponent implements OnInit {
     this.sendIdentityFeatureData.emit(data);
   }
 
-  sendShowGeocoderStatus(status: any) {
-    this.getShowGeocoderStatus.emit(status);
-  }
+  // sendShowGeocoderStatus(status: any) {
+  //   this.getShowGeocoderStatus.emit(status);
+  // }
 
 }

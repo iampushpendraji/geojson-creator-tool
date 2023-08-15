@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import * as maplibregl from 'mapbox-gl';
-import { GeocoderServiceService } from 'src/app/services/geocoder-service.service';
-import { MapServiceService } from 'src/app/services/map-service.service';
-import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
+import * as maplibregl from "maplibre-gl";
+import { GeocoderServiceService } from "src/app/services/geocoder-service.service";
+import { MapServiceService } from "src/app/services/map-service.service";
+import { SnackbarService } from "src/app/services/snackbar.service";
 
 @Component({
-  selector: 'app-geocoder',
-  templateUrl: './geocoder.component.html',
-  styleUrls: ['./geocoder.component.css']
+  selector: "app-geocoder",
+  templateUrl: "./geocoder.component.html",
+  styleUrls: ["./geocoder.component.css"],
 })
 export class GeocoderComponent implements OnInit {
   geocodeData: any;
@@ -17,38 +17,61 @@ export class GeocoderComponent implements OnInit {
   map: maplibregl.Map | undefined;
   showSearchDiv: boolean = false;
   marker: maplibregl.Marker;
+  searchTimeout: any;
+
   constructor(
     private geocoderService: GeocoderServiceService,
     private mapService: MapServiceService,
     private snackbarService: SnackbarService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.map = this.mapService.getMapData()?.map;
     this.marker = new maplibregl.Marker({
-      color: '#9508c4',
-      draggable: false
-  })
+      color: "#9508c4",
+      draggable: false,
+    });
+  }
+
+  getAddresSuggestion(value: string) {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.getGeocode(value);
+    }, 500);
   }
 
   getGeocode(value: string) {
     this.reverseGeocodeData = undefined;
     if (this.lngLatForm) {
-      this.lngLatForm.resetForm()
+      this.lngLatForm.resetForm();
     }
-    this.geocoderService.getGeocoderData(value).subscribe((data: any) => {
-      if (data) {
-        if (data.features.length == 0) {
-          this.snackbarService.openSnackbar('Error In Fetching Data', 'snackbar-err')
+    this.geocoderService.getGeocoderData(value).subscribe(
+      (data: any) => {
+        if (data) {
+          if (data.features.length == 0) {
+            if (value == "") {
+              // For handling empty search
+              this.geocodeData = data.features;
+            } else {
+              // If we do not found any result then show snackbar
+              this.snackbarService.openSnackbar(
+                "Error In Fetching Data",
+                "snackbar-err"
+              );
+            }
+          } else {
+            this.geocodeData = data.features;
+          }
         }
-        else {
-          this.geocodeData = data.features
-        }
+      },
+      (err) => {
+        this.snackbarService.openSnackbar(
+          "Error In Fetching Data",
+          "snackbar-err"
+        );
+        console.log(err);
       }
-    },
-      err => {
-        console.log(err)
-      });
+    );
   }
 
   clearGeocode() {
@@ -67,34 +90,37 @@ export class GeocoderComponent implements OnInit {
     this.map.flyTo({
       center: data.geometry.coordinates,
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion,
-      zoom: 21
+      zoom: 21,
     });
     this.marker.setLngLat(data.geometry.coordinates).addTo(this.map);
   }
 
   getLngLat(formData: NgForm) {
-    this.lngLatForm = formData
+    this.lngLatForm = formData;
     let lngLat = formData.value;
-    this.reverseGeocode(lngLat)
+    this.reverseGeocode(lngLat);
   }
 
-  reverseGeocode(value: { lat: string, lng: string }) {
+  reverseGeocode(value: { lat: string; lng: string }) {
     this.geocodeData = undefined;
-    this.geocoderService.reverseGeocodeData(value).subscribe((data: any) => {
-      if (data) {
-        if (data.error) {
-          this.snackbarService.openSnackbar('Error In Fetching Data', 'snackbar-err')
+    this.geocoderService.reverseGeocodeData(value).subscribe(
+      (data: any) => {
+        if (data) {
+          if (data.error) {
+            this.snackbarService.openSnackbar(
+              "Error In Fetching Data",
+              "snackbar-err"
+            );
+          } else {
+            this.reverseGeocodeData = data.features[0];
+            console.log(data);
+            this.showCoordinateOnMap(this.reverseGeocodeData);
+          }
         }
-        else {
-          this.reverseGeocodeData = data.features[0]
-          console.log(data)
-          this.showCoordinateOnMap(this.reverseGeocodeData)
-        }
+      },
+      (err) => {
+        console.log(err);
       }
-    },
-      err => {
-        console.log(err)
-      })
+    );
   }
-
 }

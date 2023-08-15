@@ -58,8 +58,8 @@ export class HomeComponent implements OnInit {
     this.mapCommonComponent.sendIdentityFeatureData(data);
   }
 
-  getShowGeocoderStatus(status: any){
-    this.showGeocoder = status;
-  }
+  // getShowGeocoderStatus(status: any){
+  //   this.showGeocoder = status;
+  // }
 
 }

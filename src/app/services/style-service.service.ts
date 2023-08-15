@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import * as maplibregl from 'mapbox-gl';
+import * as maplibregl from 'maplibre-gl';
 import { TextEditComponent } from '../common-module/text-edit/text-edit.component';
 import { DataShareService } from './data-share.service';
 import { IdentityFeatureServiceService } from './identity-feature-service.service';

@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MatSlideToggle, MatSlideToggleChange } from "@angular/material/slide-toggle";
-import * as maplibregl from "mapbox-gl";
+import * as maplibregl from "maplibre-gl";
 import * as turf from "@turf/turf";
 import { DataShareService } from "src/app/services/data-share.service";
 import { IdentityFeatureServiceService } from "src/app/services/identity-feature-service.service";
@@ -47,7 +47,7 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
   @Input() draw: any;
   @Input() map: any;
   @Output() sendIdentityFeatureData: EventEmitter<any> = new EventEmitter<any>();
-  @Output() getShowGeocoderStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
+  // @Output() getShowGeocoderStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('mouseTip') mouseTip: MatSlideToggle;
 
   constructor(
@@ -589,31 +589,31 @@ export class DrawCommonComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getShowMapProjectionStatus(event: MatSlideToggleChange) {
-    if (event.checked) {
-      if (this.map.getZoom() < 2) {
-        this.map.flyTo({
-          center: [78, 23],
-          zoom: 1,
-          essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-        });
-      }
-      this.map.setProjection('mercator');
-    }
-    else {
-      this.map.setProjection('globe')
-    }
-  }
+  // getShowMapProjectionStatus(event: MatSlideToggleChange) {
+  //   if (event.checked) {
+  //     if (this.map.getZoom() < 2) {
+  //       this.map.flyTo({
+  //         center: [78, 23],
+  //         zoom: 1,
+  //         essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+  //       });
+  //     }
+  //     this.map.setProjection('mercator');
+  //   }
+  //   else {
+  //     this.map.setProjection('globe')
+  //   }
+  // }
 
-  sendShowGeocoderStatus(event: MatSlideToggleChange) {
-    this.getShowGeocoderStatus.emit(event.checked);
-    if (event.checked) {
-      this.mapService.removeControlGeocoder();
-    }
-    else {
-      this.mapService.addControlGeocoder();
-    }
-  }
+  // sendShowGeocoderStatus(event: MatSlideToggleChange) {
+  //   this.getShowGeocoderStatus.emit(event.checked);
+  //   if (event.checked) {
+  //     this.mapService.removeControlGeocoder();
+  //   }
+  //   else {
+  //     this.mapService.addControlGeocoder();
+  //   }
+  // }
 
   mousePopupTurnOn() {
     this.showMapCursorTip = true;
