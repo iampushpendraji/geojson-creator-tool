@@ -8,7 +8,7 @@ import { MapServiceService } from 'src/app/services/map-service.service';
   styleUrls: ['./map-common.component.css'],
 })
 export class MapCommonComponent implements OnInit {
-  @Input() showGeocoder: boolean = false;
+  // @Input() showGeocoder: boolean = false;
   @Output() mapDataEmit: EventEmitter<any> = new EventEmitter<any>();
 
   identityFeatureSideNavCompontent: IdentityFeatureSideNavComponent;

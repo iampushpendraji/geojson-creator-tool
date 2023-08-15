@@ -7,8 +7,6 @@ import RotateMode from 'mapbox-gl-draw-rotate-mode';
 import * as maplibregl from 'maplibre-gl';
 import * as turf from '@turf/turf';
 import * as numeral from 'numeral';
-import { environment } from 'src/environments/environment';
-import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 @Injectable({
   providedIn: 'root'
@@ -217,17 +215,17 @@ export class MapServiceService {
     return geoLocator
   }
 
-  initializeGeocoder() {
-    const geocoder = new MapboxGeocoder({
-      accessToken: environment.at,
-      localGeocoder: this.coordinatesGeocoder,
-      zoom: 4,
-      placeholder: 'Try: -40, 170',
-      mapboxgl: maplibregl,
-      reverseGeocode: true
-    })
-    this.geocoder = geocoder;
-  }
+  // initializeGeocoder() {
+  //   const geocoder = new MapboxGeocoder({
+  //     accessToken: environment.at,
+  //     localGeocoder: this.coordinatesGeocoder,
+  //     zoom: 4,
+  //     placeholder: 'Try: -40, 170',
+  //     mapboxgl: maplibregl,
+  //     reverseGeocode: true
+  //   })
+  //   this.geocoder = geocoder;
+  // }
 
   coordinatesGeocoder(query) {
     // Match anything which looks like
@@ -281,8 +279,8 @@ export class MapServiceService {
     this.map?.addControl(new maplibregl.NavigationControl(), 'bottom-left');
     this.map?.addControl(this.initializeGeolocator(), 'bottom-left')
     this.map?.addControl(this.draw, 'bottom-left');
-    this.initializeGeocoder();
-    this.map?.addControl(this.geocoder, 'top-left');
+    // this.initializeGeocoder();
+    // this.map?.addControl(this.geocoder, 'top-left');
   }
 
   addControlGeocoder() {
