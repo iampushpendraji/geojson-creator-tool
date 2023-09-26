@@ -17,3 +17,14 @@ Used Tech :-
     **Maplibre**
 
     **Turf.js**
+
+
+Start Guide - 
+
+1) Install NodeJs in your system
+2) Use Nodejs version 18.18 (LTS)
+3) Install Angular 14.1.3
+4) Install packages using
+   $ npm i
+5) Serve the project using
+   $ ng serve
