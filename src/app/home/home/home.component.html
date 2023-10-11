@@ -1,8 +1,12 @@
 <div class="main-div">
+
+    <!-- Here we have our MAP -->
     <div class="map-wrapper">
         <app-map-common (mapDataEmit)="getMapData($event)"></app-map-common>
         <!-- [showGeocoder]="showGeocoder" -->
     </div>
+
+    <!-- Sidenav Section - All the tools are here -->
     <div class="border-end border-dark side-nav-wrapper">
         <app-header></app-header>
         <app-create-data [map]="map" [draw]="draw" (sendIdentityFeatureData)="sendIdentityFeatureDataFn($event)"></app-create-data>
