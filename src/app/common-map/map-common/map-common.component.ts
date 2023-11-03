@@ -21,6 +21,7 @@ export class MapCommonComponent implements OnInit {
   showSpinner: boolean = true;
   map: any;
   draw: any;
+  
   constructor(private mapService: MapServiceService) { }
 
   ngOnInit(): void {
