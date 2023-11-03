@@ -7,6 +7,7 @@ import RotateMode from 'mapbox-gl-draw-rotate-mode';
 import * as maplibregl from 'maplibre-gl';
 import * as turf from '@turf/turf';
 import * as numeral from 'numeral';
+import { MapboxExportControl, Size, PageOrientation, Format, DPI } from '@watergis/mapbox-gl-export';
 
 @Injectable({
   providedIn: 'root'
@@ -279,6 +280,14 @@ export class MapServiceService {
     this.map?.addControl(new maplibregl.NavigationControl(), 'bottom-left');
     this.map?.addControl(this.initializeGeolocator(), 'bottom-left')
     this.map?.addControl(this.draw, 'bottom-left');
+    this.map.addControl(new MapboxExportControl({
+      PageSize: Size.A3,
+      PageOrientation: PageOrientation.Portrait,
+      Format: Format.PNG,
+      DPI: DPI[96],
+      Crosshair: true,
+      PrintableArea: true,
+    }), 'top-right');
     // this.initializeGeocoder();
     // this.map?.addControl(this.geocoder, 'top-left');
   }
