@@ -9,9 +9,10 @@ import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { IconListDialogComponent } from '../icon-list-dialog/icon-list-dialog.component';
 
 @Component({
-  selector: 'app-identity-feature-side-nav',
-  templateUrl: './identity-feature-side-nav.component.html',
-  styleUrls: ['./identity-feature-side-nav.component.css'],
+    selector: 'app-identity-feature-side-nav',
+    templateUrl: './identity-feature-side-nav.component.html',
+    styleUrls: ['./identity-feature-side-nav.component.css'],
+    standalone: false
 })
 export class IdentityFeatureSideNavComponent implements OnInit {
   showMeasurement: boolean;

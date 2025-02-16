@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-create-data',
-  templateUrl: './create-data.component.html',
-  styleUrls: ['./create-data.component.css']
+    selector: 'app-create-data',
+    templateUrl: './create-data.component.html',
+    styleUrls: ['./create-data.component.css'],
+    standalone: false
 })
 export class CreateDataComponent implements OnInit {
   @Input() map: any;

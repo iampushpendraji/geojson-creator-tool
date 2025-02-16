@@ -20,9 +20,10 @@ import { UploadDataComponent } from "../upload-data/upload-data.component";
 import { DownloadDataService } from "src/app/services/download-data.service";
 
 @Component({
-  selector: "app-draw-common",
-  templateUrl: "./draw-common.component.html",
-  styleUrls: ["./draw-common.component.css"],
+    selector: "app-draw-common",
+    templateUrl: "./draw-common.component.html",
+    styleUrls: ["./draw-common.component.css"],
+    standalone: false
 })
 export class DrawCommonComponent implements OnInit, AfterViewInit {
   // isMarker: boolean = true;

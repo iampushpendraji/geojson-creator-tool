@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 
 @Component({
-  selector: 'app-confirm-box',
-  templateUrl: './confirm-box.component.html',
-  styleUrls: ['./confirm-box.component.css']
+    selector: 'app-confirm-box',
+    templateUrl: './confirm-box.component.html',
+    styleUrls: ['./confirm-box.component.css'],
+    standalone: false
 })
 export class ConfirmBoxComponent implements OnInit {
   messageData: string;

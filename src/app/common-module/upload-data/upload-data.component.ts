@@ -6,9 +6,10 @@ import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALO
 import * as turf from '@turf/turf';
 
 @Component({
-  selector: 'app-upload-data',
-  templateUrl: './upload-data.component.html',
-  styleUrls: ['./upload-data.component.css']
+    selector: 'app-upload-data',
+    templateUrl: './upload-data.component.html',
+    styleUrls: ['./upload-data.component.css'],
+    standalone: false
 })
 export class UploadDataComponent implements OnInit {
   uploadedFile: any;

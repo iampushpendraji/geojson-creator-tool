@@ -4,9 +4,10 @@ import { DataShareService } from 'src/app/services/data-share.service';
 import { StyleServiceService } from 'src/app/services/style-service.service';
 
 @Component({
-  selector: 'app-text-edit',
-  templateUrl: './text-edit.component.html',
-  styleUrls: ['./text-edit.component.css']
+    selector: 'app-text-edit',
+    templateUrl: './text-edit.component.html',
+    styleUrls: ['./text-edit.component.css'],
+    standalone: false
 })
 export class TextEditComponent implements OnInit {
   textColor: string;

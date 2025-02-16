@@ -6,9 +6,10 @@ import { MapServiceService } from "src/app/services/map-service.service";
 import { SnackbarService } from "src/app/services/snackbar.service";
 
 @Component({
-  selector: "app-geocoder",
-  templateUrl: "./geocoder.component.html",
-  styleUrls: ["./geocoder.component.css"],
+    selector: "app-geocoder",
+    templateUrl: "./geocoder.component.html",
+    styleUrls: ["./geocoder.component.css"],
+    standalone: false
 })
 export class GeocoderComponent implements OnInit {
   geocodeData: any;

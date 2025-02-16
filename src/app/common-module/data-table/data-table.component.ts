@@ -4,9 +4,10 @@ import { DownloadDataService } from 'src/app/services/download-data.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
-  selector: 'app-data-table',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.css']
+    selector: 'app-data-table',
+    templateUrl: './data-table.component.html',
+    styleUrls: ['./data-table.component.css'],
+    standalone: false
 })
 export class DataTableComponent implements OnInit {
   dataSource: any = {

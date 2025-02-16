@@ -4,9 +4,10 @@ import { MapServiceService } from 'src/app/services/map-service.service';
 import { StyleServiceService } from 'src/app/services/style-service.service';
 
 @Component({
-  selector: 'app-map-styles',
-  templateUrl: './map-styles.component.html',
-  styleUrls: ['./map-styles.component.css']
+    selector: 'app-map-styles',
+    templateUrl: './map-styles.component.html',
+    styleUrls: ['./map-styles.component.css'],
+    standalone: false
 })
 export class MapStylesComponent implements OnInit {
   @Input() map: any;

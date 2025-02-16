@@ -4,9 +4,10 @@ import { DataShareService } from 'src/app/services/data-share.service';
 import { DownloadDataService } from 'src/app/services/download-data.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])

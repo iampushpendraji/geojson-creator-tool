@@ -3,9 +3,10 @@ import { IdentityFeatureSideNavComponent } from 'src/app/common-module/identity-
 import { MapServiceService } from 'src/app/services/map-service.service';
 
 @Component({
-  selector: 'app-map-common',
-  templateUrl: './map-common.component.html',
-  styleUrls: ['./map-common.component.css'],
+    selector: 'app-map-common',
+    templateUrl: './map-common.component.html',
+    styleUrls: ['./map-common.component.css'],
+    standalone: false
 })
 export class MapCommonComponent implements OnInit {
   // @Input() showGeocoder: boolean = false;
