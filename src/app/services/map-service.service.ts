@@ -1,12 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import FreehandMode from 'mapbox-gl-draw-freehand-mode';
 import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import DrawLineFreehand from 'mapbox-gl-draw-line-freehand';
 import RotateMode from 'mapbox-gl-draw-rotate-mode';
 import * as maplibregl from 'maplibre-gl';
 import * as turf from '@turf/turf';
-import * as numeral from 'numeral';
+import numeral from 'numeral';
 import { MapboxExportControl, Size, PageOrientation, Format, DPI } from '@watergis/mapbox-gl-export';
 
 @Injectable({

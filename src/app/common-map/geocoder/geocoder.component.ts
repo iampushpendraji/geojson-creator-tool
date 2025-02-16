@@ -41,10 +41,10 @@ export class GeocoderComponent implements OnInit {
     }, 500);
   }
 
-  getGeocode(value: string) {
+  getGeocode(value: string, lngLatForm?: NgForm) {
     this.reverseGeocodeData = undefined;
-    if (this.lngLatForm) {
-      this.lngLatForm.resetForm();
+    if (lngLatForm) {
+      lngLatForm.resetForm();
     }
     this.geocoderService.getGeocoderData(value).subscribe(
       (data: any) => {
@@ -97,7 +97,6 @@ export class GeocoderComponent implements OnInit {
   }
 
   getLngLat(formData: NgForm) {
-    this.lngLatForm = formData;
     let lngLat = formData.value;
     this.reverseGeocode(lngLat);
   }
