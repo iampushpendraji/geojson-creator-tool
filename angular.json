@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "geojson-creator-tool:build:production"
+              "buildTarget": "geojson-creator-tool:build:production"
             },
             "development": {
-              "browserTarget": "geojson-creator-tool:build:development"
+              "buildTarget": "geojson-creator-tool:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "geojson-creator-tool:build"
+            "buildTarget": "geojson-creator-tool:build"
           }
         },
         "test": {
