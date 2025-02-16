@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { StyleServiceService } from 'src/app/services/style-service.service';
 
@@ -10,13 +10,13 @@ import { StyleServiceService } from 'src/app/services/style-service.service';
 })
 export class TextEditComponent implements OnInit {
   textColor: string;
-  textLat: Number;
-  textLng: Number;
+  textLat: number;
+  textLng: number;
   textHeight: string;
   textWidth: string;
   textName: string;
   textId: string;
-  textFontSize: Number;
+  textFontSize: number;
   geo_json_main: any;
   map: any;
   constructor(private dataShareService: DataShareService, private styleService: StyleServiceService, private dialogRef: MatDialogRef<TextEditComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
