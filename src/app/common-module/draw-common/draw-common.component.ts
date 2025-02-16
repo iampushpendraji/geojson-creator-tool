@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild,
 } from "@angular/core";
-import { MatLegacySlideToggle as MatSlideToggle, MatLegacySlideToggleChange as MatSlideToggleChange } from "@angular/material/legacy-slide-toggle";
+import { MatSlideToggle, MatSlideToggleChange } from "@angular/material/slide-toggle";
 import * as maplibregl from "maplibre-gl";
 import * as turf from "@turf/turf";
 import { DataShareService } from "src/app/services/data-share.service";
@@ -15,7 +15,7 @@ import { IdentityFeatureServiceService } from "src/app/services/identity-feature
 import { MapServiceService } from "src/app/services/map-service.service";
 import { SnackbarService } from "src/app/services/snackbar.service";
 import { StyleServiceService } from "src/app/services/style-service.service";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { UploadDataComponent } from "../upload-data/upload-data.component";
 import { DownloadDataService } from "src/app/services/download-data.service";
 

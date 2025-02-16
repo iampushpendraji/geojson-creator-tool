@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import * as maplibregl from 'maplibre-gl';
 import { TextEditComponent } from '../common-module/text-edit/text-edit.component';
 import { DataShareService } from './data-share.service';

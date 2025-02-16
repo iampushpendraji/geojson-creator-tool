@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from "@angular/material/dialog";
 import { DataShareService } from 'src/app/services/data-share.service';
 import { IdentityFeatureServiceService } from 'src/app/services/identity-feature-service.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
